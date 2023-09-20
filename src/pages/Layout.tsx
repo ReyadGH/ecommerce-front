@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 
 const data = {
     title: {
+        key:"nav-title-0",
         text:"E-commerce Navbar",
         herf: "/"
     },
