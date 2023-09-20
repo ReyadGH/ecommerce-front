@@ -19,7 +19,7 @@ function SimpleTable(props : {items : Map<string,string>[]}){
                                 {/*<th scope="row">{item.id}</th>*/}
                                 {
                                     Object.keys(item).map((k: string,j : number)=>
-                                        <td key={'row-'+j}>{item[k]}</td>
+                                        <td key={'customer-table-row-'+j}>{item[k]}</td>
                                     )
                                 }
                             </tr>
