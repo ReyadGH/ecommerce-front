@@ -29,11 +29,13 @@ function Navbar(props: navbarType) {
                 {/* Items */}
                 <div className="space-x-2 hidden md:flex ease-in-out duration-150">
                     {props.buttons.map( (button)=>
-                        <NavButton herf={button.herf} text={button.text}  />
-                    )}
+                        {
+                        console.log(button)
+                        return <NavButton key={button.key} herf={button.herf} text={button.text}  />
+                        })}
                 </div>
 
-                {/* menu | cart?*/}
+                {/* Menu | Cart */}
                 
                 <div onClick={handleClick} className="space-y-1 md:invisible hover:bg-slate-200 px-3 py-3 ease-in-out duration-150 rounded-md">
                     <div className="w-8 h-[0.3rem] bg-black"></div>
