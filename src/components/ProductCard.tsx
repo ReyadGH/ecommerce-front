@@ -19,7 +19,7 @@ function ProductCard(props : {items : productDataType[]}){
                                 <p className="line-clamp-3">{item.description}</p>
                                 {/* btn btn-primary */}
                             </div>
-                            <ButtonCard key={item.price+"-"+item.id} herf="#" text={"buy for $" +item.price}/>
+                            <ButtonCard key={"card-"+item.id} passedKey={"button-"+item.id} herf="#" text={"buy for $" +item.price}/>
                         </div>
                 </div>
         )}

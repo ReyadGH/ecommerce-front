@@ -3,23 +3,23 @@ import Navbar from "../components/Navbar";
 
 const data = {
     title: {
-        key:"nav-title-0",
+        passedKey:"nav-title-0",
         text:"E-commerce Navbar",
         herf: "/"
     },
     buttons: [
         {
-            key: "customer-button-0",
+            passedKey: "customer-button-0",
             text: "Customers",
             herf: "/customer",
         },
         {
-            key: "customer-button-1",
+            passedKey: "customer-button-1",
             text: "Products",
             herf: "/product",
         },
         {
-            key: "customer-button-2",
+            passedKey: "customer-button-2",
             text: "Cart",
             herf: "/cart",
         },

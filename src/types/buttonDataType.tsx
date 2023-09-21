@@ -1,5 +1,5 @@
 type buttonDataType={
-    key: string,
+    passedKey: string,
     text: string,
     herf: string
 }

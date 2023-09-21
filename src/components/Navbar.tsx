@@ -30,8 +30,7 @@ function Navbar(props: navbarType) {
                 <div className="space-x-2 hidden md:flex ease-in-out duration-150">
                     {props.buttons.map( (button)=>
                         {
-                        console.log(button)
-                        return <NavButton key={button.key} herf={button.herf} text={button.text}  />
+                        return <NavButton key={button.passedKey} passedKey={button.passedKey} herf={button.herf} text={button.text}  />
                         })}
                 </div>
 
