@@ -24,20 +24,13 @@ function Product() {
     }),
   };
 
-  const handleChange = (sort: string) => {
+  const handleChange = (params:object) => {
     setfetchedData({
-      serverUrl: "http://localhost:8080/product/page",
-      params: { sort: sort },
+      ...fetchedData.info,
+      params: {...fetchedData.info.params, ...params },
     });
   };
 
-  const handlePageClick = (currentPage:number, pageSize:number) => {
-    console.log({ page: currentPage, size: pageSize });
-    setfetchedData({
-      serverUrl: "http://localhost:8080/product/page",
-      params: { page: currentPage, size: pageSize },
-    });
-  };
   return (
     <>
       <div className="pt-5">
@@ -54,7 +47,7 @@ function Product() {
           total={fetchedData.response.totalElements - fetchedData.response.size}
           defaultPageSize={fetchedData.response.size}
           showQuickJumper
-          onChange={handlePageClick}
+          onChange={(page:number, size:number) =>handleChange({page, size})}
         />
       </div>
     </>

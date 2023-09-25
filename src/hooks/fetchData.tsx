@@ -5,12 +5,10 @@ export function useFetchData(initialState: any) {
 
 
   const [fetchTarget, setFetchTarget] = useState(initialState);
-
+  const info = fetchTarget;
   const [error, setError] = useState(undefined);
   const [response, setResponse] = useState(null);
   const [loading, setLoading] = useState(true);
-
-  //console.log(fetchTarget.params)
 
   useEffect(() => {
     axios
@@ -29,5 +27,5 @@ export function useFetchData(initialState: any) {
       });
   }, [fetchTarget.params]);
 
-  return [{error, response, loading}, setFetchTarget]
+  return [{info, error, response, loading}, setFetchTarget]
 }

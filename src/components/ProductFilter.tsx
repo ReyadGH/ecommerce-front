@@ -3,9 +3,9 @@ import DropDown from "./DropDown";
 
 type ProductFilterType = {
   filter: DropDownType;
-  submit: (filtters: string) => void;
+  submit: (filtters: object) => void;
 };
-let filters: any = {
+const filters: any = {
   sort: "id",
   order: "asc",
 };
@@ -13,7 +13,7 @@ let filters: any = {
 function ProductFilter(props: ProductFilterType) {
   const handelSubmit = (target: string, value: string) => {
     filters[target] = value;
-    props.submit(filters.sort + "," + filters.order);
+    props.submit({sort:filters.sort + "," + filters.order});
   };
 
   const orderData = {
@@ -37,9 +37,9 @@ function ProductFilter(props: ProductFilterType) {
         <svg
           className=" w-5 text-gray-600 h-5 "
           fill="none"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
           stroke="currentColor"
           viewBox="0 0 24 24"
         >

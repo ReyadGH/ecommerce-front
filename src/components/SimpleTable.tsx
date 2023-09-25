@@ -1,20 +1,21 @@
-function SimpleTable(props : {items : Map<string,string>[], actions: any[] }){
+function SimpleTable(props : {list : any[], actions: any[] }){
+    console.log(props)
     return(
     
         <div className="">
-        <table className="divide-y  shadow-2xl">
+        <table className="divide-y  shadow-2xl w-[90%] mx-auto">
                 <thead className="">
                 <tr>
                     {
-                        Object.keys(props.items[0]).map(
+                        Object.keys(props.list.items[0]).map(
                             (name: string, i: number) => <th key={i} className="px-2 py-3 bg-gray-100 text-left font-semibold text-gray-600 tracking-wider" scope="col">{name.replace(/^./, name[0].toUpperCase())}</th>
                         )
                     }
                 </tr>   
                 </thead>
                 <tbody>
-                {props.items.map(
-                    (item: any)=>{
+                {props.list.items.map(
+                    (item: object)=>{
                         return (
                             <tr className="hover:bg-gray-200 odd:bg-gray-50 even:bg-white">
                                 {/*<th scope="row">{item.id}</th>*/}
