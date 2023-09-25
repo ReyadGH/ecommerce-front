@@ -1,36 +1,26 @@
-import {useEffect, useState} from "react";
 import SimpleTable from "../components/SimpleTable";
+import { useFetchData } from "../hooks/fetchData";
 
 function Customer() {
-    const [data, setData] = useState({
-        items: [],
-        isLoaded: false
-    });
-
     const url = "http://localhost:8080/customer/list"
-    const fetchInfo = () => {
-        fetch(url)
-            .then((result) =>
-                result.json()
-            )
-            .then((d) =>
-                setData({
-                    items: d,
-                    isLoaded: true
-                })
-            )
-    }
-
-    useEffect(() => {
-        fetchInfo();
-    }, []);
-
-
-    return (!data.isLoaded)?(<h1>Please wait, data loading</h1>): (
+    const [fetchedData, setfetchedData]: any = useFetchData({
+        serverUrl: url,
+        params: {},
+      });
+    
+      if (fetchedData.loading) {
+        return (
+          <>
+            <p>please wait, data loading...</p>
+          </>
+        );
+      }
+      console.log(fetchedData)
+    return (
         <>
 
             <h1>Customers Table</h1>
-            <SimpleTable items={data.items}/>
+            <SimpleTable items={fetchedData.response} actions={[]}/>
         </>
 
     )

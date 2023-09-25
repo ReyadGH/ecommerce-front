@@ -1,34 +1,33 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-type fetchInfo = {
-  serverUrl: string;
-  params?: object;
-};
+export function useFetchData(initialState: any) {
 
-export async function useFetchData(fetchInfo: fetchInfo) {
-  const [error, setError] = useState(null);
-  const [apiData, setApiData] = useState(null);
-  const [loaded, setLoaded] = useState(false);
+
+  const [fetchTarget, setFetchTarget] = useState(initialState);
+
+  const [error, setError] = useState(undefined);
+  const [response, setResponse] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  //console.log(fetchTarget.params)
 
   useEffect(() => {
     axios
-      .get(fetchInfo.serverUrl , {params : fetchInfo.params})
-      .then(function (response) {
+      .get(fetchTarget.serverUrl, { params: fetchTarget.params })
+      .then(function (response:any) {
         // handle success
-        //console.log(response);
-        setApiData(response.data);
+        setResponse(response.data);
       })
-      .catch(function (error) {
+      .catch(function (error:any) {
         // handle error
-        //console.log(error);
-        setError(error);
+        setError(error)
       })
       .finally(function () {
         // always executed
-        setLoaded(true);
+        setLoading(false)
       });
-  }, [fetchInfo.params, fetchInfo.serverUrl]);
+  }, [fetchTarget.params]);
 
-  return { error, apiData, loaded };
+  return [{error, response, loading}, setFetchTarget]
 }

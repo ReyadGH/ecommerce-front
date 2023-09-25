@@ -29,10 +29,11 @@ const data = {
 function Layout()
 {
     return (
-        <>
-            <Navbar title={data.title} buttons={data.buttons}/>
+        <div >
+            <Navbar title={data.title} buttons={data.buttons} />
             <Outlet/>
-        </>
+        </div>
+
     )
 
 }

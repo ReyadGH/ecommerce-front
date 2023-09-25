@@ -14,7 +14,6 @@ function Navbar(props: navbarType) {
 
     function handleClick(){
         setMenu(!menu)
-        console.log("menu button clicked: "+ menu)
     }
 
     return (
