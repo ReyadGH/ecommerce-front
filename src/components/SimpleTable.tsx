@@ -7,14 +7,14 @@ function SimpleTable(props : {list : any[], actions: any[] }){
                 <thead className="">
                 <tr>
                     {
-                        Object.keys(props.list.items[0]).map(
+                        Object.keys(props.items[0]).map(
                             (name: string, i: number) => <th key={i} className="px-2 py-3 bg-gray-100 text-left font-semibold text-gray-600 tracking-wider" scope="col">{name.replace(/^./, name[0].toUpperCase())}</th>
                         )
                     }
                 </tr>   
                 </thead>
                 <tbody>
-                {props.list.items.map(
+                {props.items.map(
                     (item: object)=>{
                         return (
                             <tr className="hover:bg-gray-200 odd:bg-gray-50 even:bg-white">

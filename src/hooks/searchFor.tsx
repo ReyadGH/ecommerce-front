@@ -13,10 +13,12 @@ export function useSearchFor(initialState: searchHookType){
 
 
     const searchFor = (newSearch:searchHookType)=>{
+        console.log(newSearch)
         setSearch({...newSearch,items:_.filter(newSearch.list, (item) => {
             return item[newSearch.target].indexOf(newSearch.value) != -1;
           })})
     }
+    
     return [search, searchFor]
 }
 
