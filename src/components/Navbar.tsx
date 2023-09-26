@@ -18,11 +18,11 @@ function Navbar(props: navbarType) {
 
     return (
         <>
-            <nav className="flex items-center flex-wrap justify-between bg-slate-100 shadow-md p-5 mb-1">
+            <nav className="flex items-center flex-wrap justify-between bg-white dark:bg-gray-900 shadow-md p-5 mb-1 text-gray-600 dark:text-gray-300">
                 
                 {/* Title */}
-                <div className="flex flex-shrink-0 tracking-tight text-3xl text-cyan-900 font-bold ">   
-                    <Link to="/" className="hover:text-cyan-600 ease-in-out duration-150">{props.title.text}</Link>
+                <div className="flex flex-shrink-0 tracking-tight text-3xl  font-bold ">   
+                    <Link to="/" className="hover:text-gray-300 text-white ease-in-out duration-150">{props.title.text}</Link>
                 </div>
 
                 {/* Items */}
@@ -35,10 +35,10 @@ function Navbar(props: navbarType) {
 
                 {/* Menu | Cart */}
                 
-                <div onClick={handleClick} className="space-y-1 md:invisible hover:bg-slate-200 px-3 py-3 ease-in-out duration-150 rounded-md">
-                    <div className="w-8 h-[0.3rem] bg-black "></div>
-                    <div className="w-8 h-[0.3rem] bg-black "></div>
-                    <div className="w-8 h-[0.3rem] bg-black "></div>
+                <div onClick={handleClick} className="space-y-1 md:invisible hover:dark:bg-gray-700 hover:bg-slate-600 px-3 py-3 ease-in-out duration-150 rounded-md">
+                    <div className="w-8 h-[0.3rem] bg-black  dark:bg-white "></div>
+                    <div className="w-8 h-[0.3rem] bg-black  dark:bg-white "></div>
+                    <div className="w-8 h-[0.3rem] bg-black  dark:bg-white "></div>
                 </div>
                 {/* <div>
                     <div className="w-8 h-[0.3rem] bg-black  rotate-45 "> 
