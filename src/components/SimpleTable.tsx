@@ -1,5 +1,13 @@
-function SimpleTable(props : {list : any[], actions: any[] }){
-    console.log(props)
+import tableRowDataType from "../types/tableRowDataType"
+
+function SimpleTable(props : tableRowDataType){
+
+    if(!props.items[0]){
+return(<>
+<p>table empty</p>
+</>)
+    }
+
     return(
     
         <div className="">
@@ -15,7 +23,7 @@ function SimpleTable(props : {list : any[], actions: any[] }){
                 </thead>
                 <tbody>
                 {props.items.map(
-                    (item: object)=>{
+                    (item)=>{
                         return (
                             <tr className="hover:bg-gray-200 odd:bg-gray-50 even:bg-white">
                                 {/*<th scope="row">{item.id}</th>*/}

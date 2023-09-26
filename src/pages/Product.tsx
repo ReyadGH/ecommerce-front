@@ -1,5 +1,5 @@
 import ProductCard from "../components/ProductCard";
-import { useFetchData } from "../hooks/fetchData";
+import { useFetchData } from "../hooks/useFetchData";
 import ProductFilter from "../components/ProductFilter";
 import { Pagination } from "antd";
 

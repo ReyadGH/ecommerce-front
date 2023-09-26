@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import fetchTargetType from "../types/fetchTargetType";
 
-export function useFetchData(initialState: any) {
+export function useFetchData(initialState: fetchTargetType) {
 
 
   const [fetchTarget, setFetchTarget] = useState(initialState);
@@ -13,11 +14,11 @@ export function useFetchData(initialState: any) {
   useEffect(() => {
     axios
       .get(fetchTarget.serverUrl, { params: fetchTarget.params })
-      .then(function (response:any) {
+      .then(function (response) {
         // handle success
         setResponse(response.data);
       })
-      .catch(function (error:any) {
+      .catch(function (error) {
         // handle error
         setError(error)
       })
@@ -25,7 +26,7 @@ export function useFetchData(initialState: any) {
         // always executed
         setLoading(false)
       });
-  }, [fetchTarget.params]);
+  }, [fetchTarget.params,fetchTarget.serverUrl]);
 
   return [{info, error, response, loading}, setFetchTarget]
 }

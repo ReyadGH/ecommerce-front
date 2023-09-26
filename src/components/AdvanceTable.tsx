@@ -1,40 +1,44 @@
 import { Pagination } from "antd";
 import SimpleTable from "./SimpleTable";
-import { ChangeEvent, useState } from "react";
-import { useSearchFor } from "../hooks/searchFor";
-
-function AdvanceTable( props:{items:any[]}) {
-  const [search, setSearch] = useSearchFor({ list: props.items, target: "", value: "" });
+import { ChangeEvent, useEffect, useState } from "react";
+import { useSearchFor } from "../hooks/useSearchFor";
+function AdvanceTable( props:{items:{[key: number|string]: string}[]}) {
+  const [search, setSearch] = useSearchFor({ list: props.items, target: "", value: "" ,result:[]});
   const [pageble, setPageble] = useState({
-    elements: props.items,
+    items: {},
     page: 0,
     size: 20,
     totalPages: props.items.length/20,
-  });
+  } );
+
+  useEffect(
+    ()=>{
+      setSearch({ list: search.list, target: "username", value: "" ,result:[]})
+      setPageble({
+        items: search.list.slice(0,20),
+        page: 0,
+        size: 20,
+        totalPages: search.list.length/20,
+      } )
+    },[]
+  )
   
-  
-  const handleChangeSearch = (search?: string) => {
-    setSearch({
-      list: props.items,
-      target: "username",
-      value: search,
-    });
+  const handleChangeSearch = (searchValue: string) => {
+    setSearch({...search,target:"username", value:searchValue})
   };
 
+  const getPageItems = (page: number, size: number) =>{
+    return search.list.slice((page-1)*size,(page)*size)
+  }
   const handlePageChange = (page: number, size: number) => {
-    const getElements = () => {
-      const elementList: Array<object> = [];
-      for (let i = page * size; i < page * size + size; i++) {
-        elementList.push(props.items[i]);
-      }
-
-      return elementList;
-    };
-    console.log(getElements());
-    setPageble({ elements: getElements(), page, size, totalPages: 0 });
+    setPageble({...pageble,page,size,items:getPageItems(page, size)})
+    console.log(getPageItems(page, size))
   };
 
-  //console.log(items)
+  if(props.items.length<0){
+    return(<></>)
+  }
+// console.log(search.result)
   return (
     <>
     <div>
@@ -45,11 +49,10 @@ function AdvanceTable( props:{items:any[]}) {
           handleChangeSearch(event.target.value)
         }
       />
-      <span className="pl-2">{search.items || 0} results.</span>
     </div>
 
       <SimpleTable
-        list={props.items}
+        items={ pageble.items }
         actions={[]}
       />
       <Pagination
