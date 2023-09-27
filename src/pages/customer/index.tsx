@@ -1,8 +1,6 @@
 "use client";
-import { useFetchData } from "../../hooks/useFetchData";
-import _ from "underscore";
 import AdvanceTable from "../../components/AdvanceTable";
-import { Footer } from "../../components/Footer";
+import { useFetchData } from "../../hooks/useFetchData";
 
 function Customer() {
   const url = "http://localhost:8080/customer/list";
@@ -25,7 +23,6 @@ function Customer() {
         <h1 className="text-center text-xl">Customers Table</h1>
         <AdvanceTable items={fetchedData.response}></AdvanceTable>
       </body>
-      <Footer />
     </>
   );
 }

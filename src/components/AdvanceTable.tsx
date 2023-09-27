@@ -45,7 +45,7 @@ function AdvanceTable( props:{items:{[key: number|string]: string}[]}) {
           (<SimpleTable
             items={pageble.result}
             actions={[]}
-          />):(<p>No result</p>)
+          />):(<p className="text-center p-3">No result for, {pageble.target} = "{pageble.value}"</p>)
         }
       
       <Pagination
