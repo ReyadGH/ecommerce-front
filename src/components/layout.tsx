@@ -1,6 +1,11 @@
-import { Outlet } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import { Footer } from "../components/Footer";
+
+import { Metadata } from "next";
+import { Footer } from "./Footer";
+import Navbar from "./Navbar";
+export const metadata: Metadata = {
+  title: "My App",
+  description: "My App is a...",
+};
 
 const data = {
   title: {
@@ -26,18 +31,13 @@ const data = {
     },
   ],
 };
-
-function Layout() {
+ 
+export default function Layout({ children }) {
   return (
-    <div>
+    <>
       <Navbar title={data.title} buttons={data.buttons} />
-      <div className="min-h-screen ">
-        <Outlet />
-      </div>
-
+      <main>{children}</main>
       <Footer />
-    </div>
-  );
+    </>
+  )
 }
-
-export default Layout;

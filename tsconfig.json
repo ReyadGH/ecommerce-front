@@ -25,7 +25,7 @@
     "incremental": true,
     "plugins": [{ "name": "next" }]
   },
-  "include": ["src","./dist/types/**/*.ts","./next-env.d.ts"],
+  "include": ["./src","./dist/types/**/*.ts","./next-env.d.ts", "src/app", "next.config.mjs"],
   "exclude": ["./node_modules"],
   // "references": [{ "path": "./tsconfig.node.json" }]
 }

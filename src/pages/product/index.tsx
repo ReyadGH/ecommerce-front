@@ -1,6 +1,7 @@
-import ProductCard from "../components/ProductCard";
-import { useFetchData } from "../hooks/useFetchData";
-import ProductFilter from "../components/ProductFilter";
+'use client'
+import ProductCard from "../../components/ProductCard";
+import { useFetchData } from "../../hooks/useFetchData";
+import ProductFilter from "../../components/ProductFilter";
 import { Pagination } from "antd";
 
 function Product() {

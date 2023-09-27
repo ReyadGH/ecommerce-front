@@ -1,5 +1,5 @@
-
-import { Link } from "react-router-dom";
+'use client'
+import Link from "next/link";
 import buttonDataType from "../types/buttonDataType";
 import NavButton from "./NavButton";
 import { useState } from "react";
@@ -22,7 +22,7 @@ function Navbar(props: navbarType) {
                 
                 {/* Title */}
                 <div className="flex flex-shrink-0 tracking-tight text-3xl  font-bold ">   
-                    <Link to="/" className="hover:text-gray-300 text-white ease-in-out duration-150">{props.title.text}</Link>
+                    <Link href="/" className="hover:text-gray-300 text-white ease-in-out duration-150">{props.title.text}</Link>
                 </div>
 
                 {/* Items */}
