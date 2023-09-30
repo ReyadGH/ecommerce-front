@@ -3,7 +3,7 @@ import AdvanceTable from "../../components/AdvanceTable";
 import { useFetchData } from "../../hooks/useFetchData";
 
 function Customer() {
-  const url = "http://localhost:8080/customer/list";
+  const url = "http://localhost:8081/customer";
   const [fetchedData] = useFetchData({
     serverUrl: url,
     params: {},

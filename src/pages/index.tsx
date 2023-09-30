@@ -1,3 +1,8 @@
+import { signIn } from "next-auth/react"
+
 export default function Index(){
- return(<h1>Okay Main</h1>)
+ return(<> <button onClick={()=>signIn()}>
+    Sign in
+ </button>
+ </>)
 }

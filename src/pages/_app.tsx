@@ -1,8 +1,9 @@
-import { Metadata } from 'next';
-import { AppProps } from 'next/app';
-import '../public/styles/globals.css'
-import { Footer } from '../components/Footer';
-import Navbar from '../components/Navbar';
+import { Metadata } from "next";
+import { AppProps } from "next/app";
+import "../public/styles/globals.css";
+import { Footer } from "../components/Footer";
+import Navbar from "../components/Navbar";
+import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: "My App",
@@ -34,16 +35,19 @@ const data = {
   ],
 };
 
-
-export default function MyApp({ Component, pageProps } : AppProps) {
+export default function MyApp({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppProps) {
   return (
     <>
-      <Navbar title={data.title} buttons={data.buttons} />
-      <div className={"min-h-screen"} >
-<Component {...pageProps} />
-      </div>
-      
-      <Footer/>
+      <SessionProvider session={session}>
+        <Navbar title={data.title} buttons={data.buttons} />
+        <div className={"min-h-screen"}>
+          <Component {...pageProps} />
+        </div>
+        <Footer />
+      </SessionProvider>
     </>
-  )
+  );
 }

@@ -6,7 +6,7 @@ import { Pagination } from "antd";
 
 function Product() {
   const [fetchedData, setfetchedData]: any = useFetchData({
-    serverUrl: "http://localhost:8080/product/page",
+    serverUrl: "http://localhost:8081/product/page",
     params: {},
   });
 
