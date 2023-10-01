@@ -1,8 +1,12 @@
-import { signIn } from "next-auth/react"
+import { DefaultSession } from "next-auth"
+import { signOut, useSession } from "next-auth/react"
 
 export default function Index(){
- return(<> <button onClick={()=>signIn()}>
-    Sign in
- </button>
+   const { data: session, status} = useSession()
+      console.log(session)
+ return(<> 
+
+<pre>{status == "authenticated" && session.user?.email}</pre>
+<button onClick={()=>signOut()}>Signout</button>
  </>)
 }

@@ -1,8 +1,8 @@
-'use client'
 import Link from "next/link";
 import buttonDataType from "../types/buttonDataType";
 import NavButton from "./NavButton";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 
 type navbarType = {   
     title: buttonDataType,
@@ -11,6 +11,10 @@ type navbarType = {
 
 function Navbar(props: navbarType) {
     const [menu, setMenu] = useState(false);
+    const { data: session, status } = useSession()
+  
+    
+  
 
     function handleClick(){
         setMenu(!menu)
@@ -32,6 +36,8 @@ function Navbar(props: navbarType) {
                         return <NavButton key={button.passedKey} passedKey={button.passedKey} herf={button.herf} text={button.text}  />
                         })}
                 </div>
+
+                {(status === "authenticated") ?<p>Signed in as {session.user?.email}</p>:<a href="/api/auth/signin">Sign in</a>}
 
                 {/* Menu | Cart */}
                 
