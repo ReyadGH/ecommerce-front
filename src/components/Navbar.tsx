@@ -2,7 +2,7 @@ import Link from "next/link";
 import buttonDataType from "../types/buttonDataType";
 import NavButton from "./NavButton";
 import { useState } from "react";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 
 type navbarType = {   
     title: buttonDataType,
@@ -37,7 +37,7 @@ function Navbar(props: navbarType) {
                         })}
                 </div>
 
-                {(status === "authenticated") ?<p>Signed in as {session.user?.email}</p>:<a href="/api/auth/signin">Sign in</a>}
+                {(status === "authenticated") ?<p>Signed in as {session.user?.name} <button onClick={()=>signOut()} >Signout</button> </p> :<a href="/api/auth/signin">Sign in</a>}
 
                 {/* Menu | Cart */}
                 

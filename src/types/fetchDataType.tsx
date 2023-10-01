@@ -1,6 +1,8 @@
-type fetchData = {
-    items: Array<any>,
-    isLoaded: boolean
-}
+type fetchDataType = {
+  info: object | null;
+  error: {message:string,code:string};
+  response : { [key: string]: string; [key: number]: string; }[];
+  loading: boolean;
+};
 
-export default fetchData;
+export default fetchDataType;

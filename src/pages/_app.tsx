@@ -43,9 +43,9 @@ export default function MyApp({
     <>
       <SessionProvider session={session}>
         <Navbar title={data.title} buttons={data.buttons} />
-        <div className={"min-h-screen"}>
+        <main className={"min-h-screen"}>
           <Component {...pageProps} />
-        </div>
+        </main>
         <Footer />
       </SessionProvider>
     </>

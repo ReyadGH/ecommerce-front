@@ -3,9 +3,11 @@ import ProductCard from "../../components/ProductCard";
 import { useFetchData } from "../../hooks/useFetchData";
 import ProductFilter from "../../components/ProductFilter";
 import { Pagination } from "antd";
+import { signIn } from "next-auth/react";
+
 
 function Product() {
-  const [fetchedData, setfetchedData]: any = useFetchData({
+  const [fetchedData, setFetchedData] = useFetchData({
     serverUrl: "http://localhost:8081/product/page",
     params: {},
   });
@@ -17,7 +19,15 @@ function Product() {
       </>
     );
   }
-
+  if (fetchedData.error) {
+    return (
+    <div className="text-center">
+    <h3>{fetchedData.error.code}</h3>
+    <h3>{fetchedData.error.message}</h3>
+    <button onClick={()=>signIn()}>Sign in</button>
+    </div>
+    );
+  }
   const sortTypeData = {
     selectedId: 0,
     options: Object.keys(fetchedData.response.content[0]).map((item) => {
@@ -26,7 +36,7 @@ function Product() {
   };
 
   const handleChange = (params:object) => {
-    setfetchedData({
+    setFetchedData({
       ...fetchedData.info,
       params: {...fetchedData.info.params, ...params },
     });

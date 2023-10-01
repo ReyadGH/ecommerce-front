@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import KeycloakProvider from "next-auth/providers/keycloak";
-export default NextAuth ({
+const options = NextAuth ({
   // Configure one or more authentication providers
   providers: [
     KeycloakProvider({
@@ -31,3 +31,5 @@ export default NextAuth ({
     strategy: "jwt",
   },
 })
+
+export default options
