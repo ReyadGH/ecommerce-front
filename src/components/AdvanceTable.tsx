@@ -3,7 +3,6 @@ import SimpleTable from "./SimpleTable";
 import { ChangeEvent } from "react";
 import { useSearchForPageable } from "../hooks/useSearchForPageable";
 import searchPageableHookType from "../types/searchPageableHookType";
-import ProductFilter from "./ProductFilter";
 
 function AdvanceTable(props: { items: { [key: number | string]: string }[] }) {
   const filterOptions = Object.keys(props.items[0]) || [];
@@ -27,10 +26,6 @@ function AdvanceTable(props: { items: { [key: number | string]: string }[] }) {
 
   return (
     <>
-      <div className="m-auto text-center p-5">
-        <ProductFilter filter={sortTypeData} submit={handleChange} />
-      </div>
-      
       <div className=" text-center p-3">
         <input
           className="border-3 border border-black"
