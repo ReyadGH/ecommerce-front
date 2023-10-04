@@ -1,52 +1,45 @@
 import { useReducer } from "react";
 import NumericalInput from "../../components/NumericalInput";
 import { actionType } from "../../types/NumeriaclInputType";
+import { CartItemsType } from "../../types/CartItemsType";
 
-type CartItemsType = {
-  id: number;
-  name: string;
-  description: string;
-  image: string;
-  price: number;
-  quantity: number;
-};
+const reducer = (
+  carts: CartItemsType[],
+  action: actionType
+): CartItemsType[] => {
+  const cartIndex = carts.findIndex((cart) => cart.id === action.id);
+  if (cartIndex < 0) throw Error("Internal Error: Out of cart index");
 
-function inputReducer(data: CartItemsType, action: actionType) {
-  console.log(action);
+  const updatedCart = { ...carts[cartIndex] };
+
   switch (action.type) {
     case "increment":
-      return {
-        ...data,
-        quantity:
-          data.quantity + action.value > action.max
-            ? data.quantity
-            : data.quantity + action.value,
-      };
+      if (updatedCart.quantity < action.max) {
+        updatedCart.quantity += action.value;
+      }
+      break;
     case "change":
-      return {
-        ...data,
-        quantity:
-          action.value > action.min && action.value < action.max
-            ? data.quantity
-            : data.quantity + action.value,
-      };
+      if (action.value >= action.min && action.value <= action.max) {
+        updatedCart.quantity = action.value;
+      }
+      break;
     case "decrement":
-      return {
-        ...data,
-        quantity:
-          data.quantity - action.value < action.min
-            ? data.quantity
-            : data.quantity - action.value,
-      };
+      if (updatedCart.quantity > action.min) {
+        updatedCart.quantity -= action.value;
+      }
+      break;
     default:
-      throw Error("undefine type: " + action.type);
+      throw Error("Internal Error: No reducer with type: " + action.type);
   }
-}
+  const updatedCarts = [...carts];
+  updatedCarts[cartIndex] = updatedCart;
 
+  return updatedCarts;
+};
 const props: { items: CartItemsType[] } = {
   items: [
     {
-      id: 0,
+      id: 1,
       name: "Lorem, ipsum dolor.",
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi.",
@@ -55,8 +48,7 @@ const props: { items: CartItemsType[] } = {
       quantity: 1,
     },
     {
-      id: 1,
-
+      id: 22,
       name: "Lorem, ipsum dolor.",
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi.",
@@ -65,7 +57,7 @@ const props: { items: CartItemsType[] } = {
       quantity: 3,
     },
     {
-      id: 2,
+      id: 87,
 
       name: "Lorem, ipsum dolor.",
       description:
@@ -75,8 +67,7 @@ const props: { items: CartItemsType[] } = {
       quantity: 2,
     },
     {
-      id: 3,
-
+      id: 63,
       name: "Lorem, ipsum dolor.",
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi.",
@@ -87,32 +78,30 @@ const props: { items: CartItemsType[] } = {
   ],
 };
 
-function Product() {
-  const getTotal = () => {
-    let total: number = 0;
-    props.items.forEach((item) => {
-      total += item.price * item.quantity;
-    });
+function Cart() {
+  const sumTotal = () => {
+    return data
+      .reduce((sum, item) => sum + item.price * item.quantity, 0)
+      .toFixed(2);
+  };
 
-    return total.toFixed(2);
-  };
-  const [myCart, dispatch] = useReducer(inputReducer, props.items);
-  const handleCartItemChange = (id: string, quantity: number) => {
-    console.log(id + ", " + quantity);
-  };
+  const [data, reduceData] = useReducer(reducer, props.items);
 
   return (
     <div className="grid grid-cols-4 gap-2 w-[90%] m-auto ">
       {/* items grid */}
       <div className="col-span-3 border-black border-opacity-10 border-2 shadow-lg rounded-md p-5 space-y-5">
-        {myCart.items.map((item) => {
-          {
-            console.log(item.image);
-          }
-
+        {data.map((item) => {
           return (
-            <div className="flex space-x-5 justify-around">
-              <img className="w-40 h-40" src={item.image} alt="Product image" />
+            <div
+              key={"cartItemsHolder-" + item.id}
+              className="flex space-x-5 justify-around"
+            >
+              <img
+                className="w-40 h-40"
+                src={item.image}
+                alt="Product image"
+              />
               <span>
                 <p className="font-bold text-xl">Lorem, ipsum dolor.</p>
                 <p className="text-lg">
@@ -123,8 +112,10 @@ function Product() {
               <span className="h-min my-auto">
                 <NumericalInput
                   id={item.id}
-                  quantity={item.quantity}
-                  changeContext={handleCartItemChange}
+                  defualtValue={item.quantity}
+                  min={1}
+                  max={99}
+                  changeHandler={reduceData}
                 />
               </span>
             </div>
@@ -135,9 +126,12 @@ function Product() {
       <div className="border-black border-opacity-10 border-2 shadow-lg divide-y-2 p-5 rounded-md text-xl h-fit">
         {/* Items List */}
         <div className="px-3 space-y-4 pb-6">
-          {myCart.items.map((item) => {
+          {data.map((item) => {
             return (
-              <div className="flex justify-between">
+              <div
+                key={"cartTotalHolder-" + item.id}
+                className="flex justify-between"
+              >
                 <p>{item.name}</p>
                 <p>
                   <span>$</span>
@@ -153,7 +147,7 @@ function Product() {
             <p>Your total is.</p>
             <p>
               <span>$</span>
-              <>{myCart.total}</>
+              <>{sumTotal()}</>
             </p>
           </div>
           <button className="bg-blue-500 rounded-md p-2 text-slate-50 w-full hover:bg-blue-600">
@@ -165,4 +159,4 @@ function Product() {
   );
 }
 
-export default Product;
+export default Cart;

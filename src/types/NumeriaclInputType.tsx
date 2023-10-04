@@ -3,7 +3,7 @@ export type NumericalInputType = {
   defualtValue: number;
   min?: number;
   max?: number;
-  changeContext: (cart: { id: number; quantity: number }) => void;
+  changeHandler: (action: actionType) => void;
 };
 
 export type actionType = {
