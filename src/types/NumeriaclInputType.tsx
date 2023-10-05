@@ -1,6 +1,7 @@
 export type NumericalInputType = {
   id: number;
   defualtValue: number;
+  step?: number;
   min?: number;
   max?: number;
   changeHandler: (action: actionType) => void;

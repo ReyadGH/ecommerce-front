@@ -4,21 +4,23 @@ import fetchTargetType from "../types/fetchTargetType";
 import { useSession } from "next-auth/react";
 import fetchDataType from "../types/fetchDataType";
 
-export function useFetchData(initialState: fetchTargetType): [fetchDataType,Dispatch<SetStateAction<fetchTargetType>>] {
-  const {data: session, status} = useSession() 
+export function useFetchData(
+  initialState: fetchTargetType
+): [fetchDataType, Dispatch<SetStateAction<fetchTargetType>>] {
+  const { data: session, status } = useSession();
   const [fetchTarget, setFetchTarget] = useState(initialState);
   const info = fetchTarget;
   const [error, setError] = useState(undefined);
   const [response, setResponse] = useState(undefined);
   const [loading, setLoading] = useState(true);
 
-
   useEffect(() => {
     axios
       .get(fetchTarget.serverUrl, {
         headers: {
-          Authorization:
-            `Bearer ${(session!=null && session.accessToken)?session.accessToken:""}`,
+          Authorization: `Bearer ${
+            session != null && session.accessToken ? session.accessToken : ""
+          }`,
         },
         params: fetchTarget.params,
       })
