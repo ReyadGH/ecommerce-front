@@ -2,6 +2,7 @@
 import AdvanceTable from "../../components/AdvanceTable";
 import { useFetchData } from "../../hooks/useFetchData";
 import { signIn } from "next-auth/react";
+import { LoadingData } from "../../components/LoadingData";
 function Customer() {
   const url = "http://localhost:8081/customer";
   const [fetchedData] = useFetchData({
@@ -10,12 +11,9 @@ function Customer() {
   });
 
   if (fetchedData.loading) {
-    return (
-      <>
-        <p>please wait, data loading...</p>
-      </>
-    );
+    return <LoadingData text={"please wait, data loading..."} />;
   }
+
   if (fetchedData.error) {
     return (
       <div className="text-center">
@@ -25,6 +23,7 @@ function Customer() {
       </div>
     );
   }
+
   console.log(fetchedData.error);
 
   return (

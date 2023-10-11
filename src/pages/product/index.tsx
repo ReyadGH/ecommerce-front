@@ -1,10 +1,10 @@
-'use client'
+"use client";
 import ProductCard from "../../components/ProductCard";
 import { useFetchData } from "../../hooks/useFetchData";
 import ProductFilter from "../../components/ProductFilter";
 import { Pagination } from "antd";
 import { signIn } from "next-auth/react";
-
+import { LoadingData } from "../../components/LoadingData";
 
 function Product() {
   const [fetchedData, setFetchedData] = useFetchData({
@@ -13,19 +13,16 @@ function Product() {
   });
 
   if (fetchedData.loading) {
-    return (
-      <>
-        <p>please wait, data loading...</p>
-      </>
-    );
+    return <LoadingData text={"please wait, data loading..."} />;
   }
+
   if (fetchedData.error) {
     return (
-    <div className="text-center">
-    <h3>{fetchedData.error.code}</h3>
-    <h3>{fetchedData.error.message}</h3>
-    <button onClick={()=>signIn()}>Sign in</button>
-    </div>
+      <div className="text-center">
+        <h3>{fetchedData.error.code}</h3>
+        <h3>{fetchedData.error.message}</h3>
+        <button onClick={() => signIn()}>Sign in</button>
+      </div>
     );
   }
   const sortTypeData = {
@@ -35,10 +32,10 @@ function Product() {
     }),
   };
 
-  const handleChange = (params:object) => {
+  const handleChange = (params: object) => {
     setFetchedData({
       ...fetchedData.info,
-      params: {...fetchedData.info.params, ...params },
+      params: { ...fetchedData.info.params, ...params },
     });
   };
 
@@ -58,7 +55,9 @@ function Product() {
           total={fetchedData.response.totalElements - fetchedData.response.size}
           defaultPageSize={fetchedData.response.size}
           showQuickJumper
-          onChange={(page:number, size:number) =>handleChange({page, size})}
+          onChange={(page: number, size: number) =>
+            handleChange({ page, size })
+          }
         />
       </div>
     </>

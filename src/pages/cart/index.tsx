@@ -1,6 +1,8 @@
 import { signIn } from "next-auth/react";
 import { useFetchData } from "../../hooks/useFetchData";
-import CartPage from "./index1";
+import CartPage from "./CartPage";
+import { LoadingData } from "../../components/LoadingData";
+import { ErrorBoundary } from "react-error-boundary";
 
 function PageLayout() {
   const [fetchedData] = useFetchData({
@@ -9,7 +11,7 @@ function PageLayout() {
   if (fetchedData.loading) {
     return (
       <>
-        <p>please wait, data loading...</p>
+        <LoadingData text={"please wait, data loading..."} />{" "}
       </>
     );
   }
@@ -23,7 +25,13 @@ function PageLayout() {
     );
   }
 
-  return <CartPage items={fetchedData.response} />;
+  return (
+    <>
+      <ErrorBoundary fallback={<p>Error</p>}>
+        <CartPage items={fetchedData.response} />
+      </ErrorBoundary>
+    </>
+  );
 }
 
 export default PageLayout;

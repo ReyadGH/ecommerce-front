@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import { CartItemsType } from "../../types/CartItemsType";
 import { MyCart } from "../../components/MyCart";
 import { BillingCard } from "../../components/BillingCard";
-import _, { keys } from "underscore";
+import _ from "underscore";
 
 const cartReducer = (cart: CartItemsType[], action: actionType) => {
   const currentIndex = cart.findIndex((item) => item.id == action.id);
@@ -42,7 +42,7 @@ const cartReducer = (cart: CartItemsType[], action: actionType) => {
 
 function CartPage(props: { items: CartItemsType[] }) {
   const [carts, reducer] = useReducer(cartReducer, props.items);
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
   const childHandler = (action: actionType) => {
     reducer(action);
@@ -69,14 +69,18 @@ function CartPage(props: { items: CartItemsType[] }) {
 
   return (
     <>
-      <div className="grid grid-cols-4 gap-2 w-[90%] m-auto ">
-        {/* items grid */}
-        <MyCart
-          carts={carts.filter((cart) => cart.status == "DRAFT")}
-          childHandler={childHandler}
-          title="MyCart"
-          showOptions={true}
-        />
+      <div className="w-[90%] m-auto space-y-8 my-8">
+        <div className="flex space-x-8">
+          {/* items grid */}
+          <MyCart
+            carts={carts.filter((cart) => cart.status == "DRAFT")}
+            childHandler={childHandler}
+            title="MyCart"
+            showOptions={true}
+          />
+          {/* total grid */}
+          <BillingCard carts={carts} />
+        </div>
         {Object.keys(group).map((k) => (
           <MyCart
             carts={group[k]}
@@ -85,9 +89,6 @@ function CartPage(props: { items: CartItemsType[] }) {
             showOptions={false}
           />
         ))}
-
-        {/* total grid */}
-        <BillingCard carts={carts} />
       </div>
     </>
   );
