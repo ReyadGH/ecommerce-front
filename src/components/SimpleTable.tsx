@@ -1,47 +1,52 @@
-import tableRowDataType from "../types/tableRowDataType"
+import tableRowDataType from "../types/tableRowDataType";
 
-function SimpleTable(props : tableRowDataType){
+function SimpleTable(props: tableRowDataType) {
+  if (!props.items[0]) {
+    return (
+      <>
+        <p>table empty</p>
+      </>
+    );
+  }
 
-    if(!props.items[0]){
-return(<>
-<p>table empty</p>
-</>)
-    }
-
-    return(
-    
-        <div className="">
-        <table className="divide-y  shadow-2xl w-[90%] mx-auto">
-                <thead className="">
-                <tr>
-                    {
-                        Object.keys(props.items[0]).map(
-                            (name: string, i: number) => <th key={i} className="px-2 py-3 bg-gray-100 text-left font-semibold text-gray-600 tracking-wider" scope="col">{name.replace(/^./, name[0].toUpperCase())}</th>
-                        )
-                    }
-                </tr>   
-                </thead>
-                <tbody>
-                {props.items.map(
-                    (item)=>{
-                        return (
-                            <tr className="hover:bg-gray-200 odd:bg-gray-50 even:bg-white">
-                                {/*<th scope="row">{item.id}</th>*/}
-                                {
-                                    Object.keys(item).map((k: string,j : number)=>
-                                        <td key={'customer-table-row-'+j} className="px-2 py-3 border-b border-gray-200   text-sm">
-                                            <p className="text-gray-900 whitespace-no-wrap">{item[k]}</p>
-                                        </td>
-                                    )
-                                }
-                            </tr>
-                        )
-                    }
-                )}
-                </tbody>
-            </table>
-        </div>
-    )
+  return (
+    <div className="">
+      <table className="mx-auto  w-[90%] divide-y shadow-2xl">
+        <thead className="">
+          <tr>
+            {Object.keys(props.items[0]).map((name: string, i: number) => (
+              <th
+                key={i}
+                className="bg-gray-100 px-2 py-3 text-left font-semibold tracking-wider text-gray-600"
+                scope="col"
+              >
+                {name.replace(/^./, name[0].toUpperCase())}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {props.items.map((item) => {
+            return (
+              <tr className="odd:bg-gray-50 even:bg-white hover:bg-gray-200">
+                {/*<th scope="row">{item.id}</th>*/}
+                {Object.keys(item).map((k: string, j: number) => (
+                  <td
+                    key={"customer-table-row-" + j}
+                    className="border-b border-gray-200 px-2 py-3   text-sm"
+                  >
+                    <p className="whitespace-no-wrap text-gray-900">
+                      {item[k]}
+                    </p>
+                  </td>
+                ))}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
 }
 
-export default SimpleTable
+export default SimpleTable;

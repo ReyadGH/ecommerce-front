@@ -4,6 +4,7 @@ import "../public/styles/globals.css";
 import { Footer } from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { SessionProvider } from "next-auth/react";
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 
 export const metadata: Metadata = {
   title: "My App",
@@ -13,24 +14,24 @@ export const metadata: Metadata = {
 const data = {
   title: {
     passedKey: "nav-title-0",
-    text: "E-commerce Navbar",
+    text: "E-commerce",
     herf: "/",
   },
   buttons: [
     {
-      passedKey: "customer-button-0",
+      passedKey: "nav-button-1",
       text: "Customers",
       herf: "/customer",
     },
     {
-      passedKey: "customer-button-1",
+      passedKey: "nav-button-2",
       text: "Products",
       herf: "/product",
     },
     {
-      passedKey: "customer-button-2",
-      text: "Cart",
-      herf: "/cart",
+      passedKey: "nav-button-3",
+      text: "My Store",
+      herf: "/mystore",
     },
   ],
 };
@@ -39,15 +40,21 @@ export default function MyApp({
   Component,
   pageProps: { session, ...pageProps },
 }: AppProps) {
+  const queryClient = new QueryClient();
+
   return (
     <>
-      <SessionProvider session={session}>
-        <Navbar title={data.title} buttons={data.buttons} />
-        <main className={"min-h-screen"}>
-          <Component {...pageProps} />
-        </main>
-        <Footer />
-      </SessionProvider>
+      <main className="font-Mono text-gray-600 dark:bg-slate-800 dark:text-gray-300">
+        <SessionProvider session={session}>
+          <QueryClientProvider client={queryClient}>
+            <Navbar title={data.title} buttons={data.buttons} />
+            <div className={"min-h-screen"}>
+              <Component {...pageProps} />
+            </div>
+            <Footer />
+          </QueryClientProvider>
+        </SessionProvider>
+      </main>
     </>
   );
 }

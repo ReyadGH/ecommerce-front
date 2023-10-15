@@ -5,9 +5,9 @@ import { LoadingData } from "../../components/LoadingData";
 import { ErrorBoundary } from "react-error-boundary";
 
 function PageLayout() {
-  const [fetchedData] = useFetchData({
-    serverUrl: "http://localhost:8081/cart",
-  });
+  // const [fetchedData] = useFetchData({
+  //   serverUrl: "http://localhost:8081/cart",
+  // });
   if (fetchedData.loading) {
     return (
       <>

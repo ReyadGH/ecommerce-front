@@ -3,9 +3,9 @@ const nextConfig = {
   experimental: {
     serverActions: true,
   },
-  reactStrictMode:true,
-  swcMinify:true,
+  reactStrictMode: true,
+  swcMinify: true,
   //output: 'standalone', // Outputs a Single-Page Application (SPA)
-  distDir: './dist', // Changes the output directory `./dist/`
-}
-export default nextConfig
+  distDir: "./dist", // Changes the output directory `./dist/`
+};
+export default nextConfig;

@@ -58,18 +58,18 @@ function CartPage(props: { items: CartItemsType[] }) {
               session != null && session.accessToken ? session.accessToken : ""
             }`,
           },
-        }
+        },
       )
       .catch();
   };
   const group = _.groupBy(
     carts.filter((cart) => cart.status != "DRAFT"),
-    "date"
+    "date",
   );
 
   return (
     <>
-      <div className="w-[90%] m-auto space-y-8 my-8">
+      <div className="m-auto my-8 w-[90%] space-y-8">
         <div className="flex space-x-8">
           {/* items grid */}
           <MyCart

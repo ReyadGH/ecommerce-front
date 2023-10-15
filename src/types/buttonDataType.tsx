@@ -1,7 +1,7 @@
-type buttonDataType={
-    passedKey: string,
-    text: string,
-    herf: string
-}
+type buttonDataType = {
+  passedKey?: string;
+  text: string;
+  herf: string;
+};
 
-export default buttonDataType
+export default buttonDataType;

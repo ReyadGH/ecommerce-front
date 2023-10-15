@@ -10,8 +10,8 @@ export function MyCart(props: {
 }) {
   return (
     <>
-      <div className="col-span-3 border-black border-opacity-10 border-2 shadow-lg rounded-md p-5 space-y-5">
-        <h1 className="text-3xl pl-4 py-4 border-b-2">{props.title}</h1>
+      <div className="col-span-3 space-y-5 rounded-md border-2 border-black border-opacity-10 p-5 shadow-lg">
+        <h1 className="border-b-2 py-4 pl-4 text-3xl">{props.title}</h1>
 
         {props.carts.map((item) => {
           return (

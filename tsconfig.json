@@ -2,11 +2,7 @@
   "compilerOptions": {
     "target": "ES2020",
     "useDefineForClassFields": true,
-    "lib": [
-      "ES2020",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -40,10 +36,9 @@
     "next.config.mjs",
     "src/pages",
     "postcss.config.js",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "src/types/*.d.ts"
   ],
-  "exclude": [
-    "./node_modules"
-  ]
+  "exclude": ["./node_modules"]
   // "references": [{ "path": "./tsconfig.node.json" }]
 }

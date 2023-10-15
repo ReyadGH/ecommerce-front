@@ -1,24 +1,20 @@
-'use client'
+"use client";
 export function Footer() {
   return (
-    <footer className="bg-white dark:bg-gray-900">
-      <div className="container flex flex-col items-center justify-between p-6 mx-auto space-y-4 sm:space-y-0 sm:flex-row">
-        <h1 className="text-2xl text-gray-600 dark:text-gray-300">
-          Ecommerce Project
-        </h1>
+    <footer className="bg-slate-100 dark:bg-gray-700">
+      <div className=" container mx-auto flex flex-col items-center justify-between space-y-4 p-6 sm:flex-row sm:space-y-0">
+        <h1 className="text-2xl font-bold">Ecommerce Project</h1>
 
-        <p className="text-sm text-gray-600 dark:text-gray-300">
-          © Copyright 2023. All Rights Lost.
-        </p>
+        <p className="text-sm">© Copyright 2023. All Rights Lost.</p>
 
-        <div className="flex -mx-2">
+        <div className="-mx-2 flex">
           <a
             href="#"
-            className="mx-2 text-gray-600 transition-colors duration-300 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
+            className="mx-2 text-gray-600 transition-colors duration-300 hover:text-blue-500 dark:text-gray-300 dark:hover:text-blue-400"
             aria-label="Reddit"
           >
             <svg
-              className="w-5 h-5 fill-current"
+              className="h-5 w-5 fill-current"
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -29,11 +25,11 @@ export function Footer() {
 
           <a
             href="#"
-            className="mx-2 text-gray-600 transition-colors duration-300 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
+            className="mx-2 text-gray-600 transition-colors duration-300 hover:text-blue-500 dark:text-gray-300 dark:hover:text-blue-400"
             aria-label="Facebook"
           >
             <svg
-              className="w-5 h-5 fill-current"
+              className="h-5 w-5 fill-current"
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -44,11 +40,11 @@ export function Footer() {
 
           <a
             href="#"
-            className="mx-2 text-gray-600 transition-colors duration-300 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
+            className="mx-2 text-gray-600 transition-colors duration-300 hover:text-blue-500 dark:text-gray-300 dark:hover:text-blue-400"
             aria-label="Github"
           >
             <svg
-              className="w-5 h-5 fill-current"
+              className="h-5 w-5 fill-current"
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"

@@ -1,7 +1,6 @@
 export type DropDownType = {
-    options: Array<{
-      value: string;
-      text: string;
-    }>;
-  };
-
+  options: Array<{
+    value: string;
+    text: string;
+  }>;
+};

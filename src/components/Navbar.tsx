@@ -1,60 +1,88 @@
-import Link from "next/link";
 import buttonDataType from "../types/buttonDataType";
 import NavButton from "./NavButton";
 import { useState } from "react";
-import { useSession, signOut } from "next-auth/react";
-
-type navbarType = {   
-    title: buttonDataType,
-    buttons: buttonDataType[];
-}
+import { signIn, useSession } from "next-auth/react";
+import { HiShoppingCart, HiUser } from "react-icons/hi";
+import { SideBar } from "./SideBar";
+import Link from "next/link";
+type navbarType = {
+  title: buttonDataType;
+  buttons: buttonDataType[];
+};
 
 function Navbar(props: navbarType) {
-    const [menu, setMenu] = useState(false);
-    const { data: session, status } = useSession()
-  
-    
-  
+  const [menu, setMenu] = useState(false);
+  const { status } = useSession();
+  function handleClick() {
+    setMenu(!menu);
+  }
 
-    function handleClick(){
-        setMenu(!menu)
-    }
+  return (
+    <>
+      <nav className="flex h-16 w-full items-center justify-between bg-slate-100 px-8 dark:bg-gray-700">
+        <h1 className="text-2xl font-bold">
+          <Link
+            href="/"
+            className="text-white duration-150 ease-in-out hover:text-gray-300"
+          >
+            {props.title.text}
+          </Link>
+        </h1>
+        {/* <span className="space-x-4 lg:inline hidden">
+          <input type="text" />
+          <button>Search</button>
+        </span> */}
+        <ul className="flex items-center gap-2 text-lg ">
+          {props.buttons.map((button) => {
+            return (
+              // check role
+              <NavButton
+                key={button.passedKey}
+                passedKey={button.passedKey}
+                herf={button.herf}
+                text={button.text}
+              />
+            );
+          })}
+          {status === "authenticated" ? (
+            <>
+              <Link
+                href={"/cart"}
+                className="select-none rounded-md p-2 px-3 hover:cursor-pointer dark:hover:bg-gray-600 "
+              >
+                <HiShoppingCart />
+              </Link>
+              <Link
+                href={"/api/auth/signout"}
+                className="select-none rounded-md p-2 px-3 hover:cursor-pointer dark:hover:bg-gray-600 "
+              >
+                <HiUser />
+              </Link>
+            </>
+          ) : (
+            <li
+              onClick={() => signIn("keycloak")}
+              className="hidden select-none rounded-md p-2 px-3 hover:cursor-pointer dark:hover:bg-gray-600 md:inline"
+            >
+              <p>Login</p>
+            </li>
+          )}
 
-    return (
-        <>
-            <nav className="flex items-center flex-wrap justify-between bg-white dark:bg-gray-900 shadow-md p-5 mb-1 text-gray-600 dark:text-gray-300">
-                
-                {/* Title */}
-                <div className="flex flex-shrink-0 tracking-tight text-3xl  font-bold ">   
-                    <Link href="/" className="hover:text-gray-300 text-white ease-in-out duration-150">{props.title.text}</Link>
-                </div>
-
-                {/* Items */}
-                <div className="space-x-2 hidden md:flex ease-in-out duration-150">
-                    {props.buttons.map( (button)=>
-                        {
-                        return <NavButton key={button.passedKey} passedKey={button.passedKey} herf={button.herf} text={button.text}  />
-                        })}
-                </div>
-
-                {(status === "authenticated") ?<p>Signed in as {session.user?.name} <button onClick={()=>signOut()} >Signout</button> </p> :<a href="/api/auth/signin">Sign in</a>}
-
-                {/* Menu | Cart */}
-                
-                <div onClick={handleClick} className="space-y-1 md:invisible hover:dark:bg-gray-700 hover:bg-slate-600 px-3 py-3 ease-in-out duration-150 rounded-md">
-                    <div className="w-8 h-[0.3rem] bg-black  dark:bg-white "></div>
-                    <div className="w-8 h-[0.3rem] bg-black  dark:bg-white "></div>
-                    <div className="w-8 h-[0.3rem] bg-black  dark:bg-white "></div>
-                </div>
-                {/* <div>
-                    <div className="w-8 h-[0.3rem] bg-black  rotate-45 "> 
-                    <div className="w-8 h-[0.3rem] bg-black  relative -rotate-90"> </div></div>
-                    
-                </div> */}
-            </nav>
-        </>
-
-    );
+          <li
+            onClick={handleClick}
+            className="select-none space-y-1 rounded-md px-3 py-3 duration-150 ease-in-out hover:cursor-pointer hover:bg-slate-600 hover:dark:bg-gray-700 md:hidden"
+          >
+            <div className="h-[0.225rem] w-6 rounded-md bg-black  dark:bg-gray-300 "></div>
+            <div className="h-[0.225rem] w-6 rounded-md bg-black  dark:bg-gray-300 "></div>
+            <div className="h-[0.225rem] w-6 rounded-md bg-black  dark:bg-gray-300 "></div>
+          </li>
+        </ul>
+      </nav>
+      {menu ? (
+        <SideBar status={menu} toggleStatus={() => setMenu(!menu)} />
+      ) : null}
+    </>
+  );
 }
 
 export default Navbar;

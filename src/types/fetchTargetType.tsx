@@ -1,6 +1,6 @@
 type fetchTargetType = {
   serverUrl: string;
-  info?:object,
+  info?: object;
   params?: object;
 };
 

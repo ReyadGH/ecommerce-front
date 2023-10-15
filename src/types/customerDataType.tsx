@@ -6,4 +6,4 @@ type customerDataType = {
   password: string;
 };
 
-export default customerDataType
+export default customerDataType;

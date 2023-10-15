@@ -1,18 +1,5 @@
 import { NumericalInputType, actionType } from "../types/NumeriaclInputType";
 
-// function debounce<Params extends any[]>(
-//   func: (...args: Params) => any,
-//   timeout: number
-// ): (...args: Params) => void {
-//   let timer: NodeJS.Timeout;
-//   return (...args: Params) => {
-//     clearTimeout(timer);
-//     timer = setTimeout(() => {
-//       func(...args);
-//     }, timeout);
-//   };
-// }
-
 function NumericalInput(data: NumericalInputType) {
   const dummyAction: actionType = {
     id: data.id,
@@ -31,7 +18,7 @@ function NumericalInput(data: NumericalInputType) {
   return (
     <>
       <button
-        className="bg-blue-500 hover:bg-blue-600 p-2 rounded-l-md text-xl text-slate-50 px-4"
+        className="rounded-l-md bg-blue-500 p-2 px-4 text-xl text-slate-50 hover:bg-blue-600"
         data-action="increment"
         key={"input-increment-" + data.id}
         onClick={() => handler({ ...dummyAction, type: "increment" })}
@@ -39,7 +26,7 @@ function NumericalInput(data: NumericalInputType) {
         +
       </button>
       <input
-        className=" focus:outline-none text-center text-xl w-32 py-2 bg-blue-50"
+        className=" w-32 bg-blue-50 py-2 text-center text-xl focus:outline-none"
         type="number"
         min={dummyAction.min}
         max={dummyAction.max}
@@ -53,7 +40,7 @@ function NumericalInput(data: NumericalInputType) {
         }
       />
       <button
-        className="bg-blue-500 hover:bg-blue-600 p-2 rounded-r-md text-xl text-slate-50 px-4"
+        className="rounded-r-md bg-blue-500 p-2 px-4 text-xl text-slate-50 hover:bg-blue-600"
         data-action="decrement"
         key={"input-decrement-" + data.id}
         onClick={() => handler({ ...dummyAction, type: "decrement" })}

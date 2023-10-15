@@ -1,19 +1,9 @@
-import { DropDownType } from "../types/dropDownType";
+import { filterSearchType, searchFilterType } from "../types/searchFilterType";
 import DropDown from "./DropDown";
 
-type ProductFilterType = {
-  filter: DropDownType;
-  submit: (filtters: object) => void;
-};
-const filters: any = {
-  sort: "id",
-  order: "asc",
-};
-
-function ProductFilter(props: ProductFilterType) {
-  const handelSubmit = (target: string, value: string) => {
-    filters[target] = value;
-    props.submit({sort:filters.sort + "," + filters.order});
+function ProductFilter(props: searchFilterType) {
+  const handelSubmit = (values: filterSearchType) => {
+    props.submit(values);
   };
 
   const orderData = {
@@ -30,12 +20,12 @@ function ProductFilter(props: ProductFilterType) {
   };
 
   return (
-    <div className="rounded flex flex-col md:flex-row flex-wrap items-center w-full p-2 shadow-sm border space-y-3 space-x-3 border-gray-200">
+    <div className="flex w-full flex-col flex-wrap items-center space-x-3 space-y-3 rounded border border-gray-200 p-2 shadow-sm md:flex-row">
       {/* search bar */}
-      
-      <span className="outline-none flex items-center space-x-2 divide-x-2 grow w-full md:w-auto px-2 border border-gray-200 rounded-md">
+
+      <span className="flex w-full grow items-center space-x-2 divide-x-2 rounded-md border border-gray-200 px-2 outline-none md:w-auto">
         <svg
-          className=" w-5 text-gray-600 h-5 "
+          className=" h-5 w-5 text-gray-600 "
           fill="none"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -46,22 +36,25 @@ function ProductFilter(props: ProductFilterType) {
           <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
         </svg>
         <input
-        type="text"
-        className=" p-2 text-lg grow outline-none focus:outline-none "
-      />
+          type="text"
+          className=" grow p-2 text-lg outline-none focus:outline-none "
+          onChange={(e) => handelSubmit({ searchValue: e.target.value })}
+        />
       </span>
 
       {/* select */}
-      <span >
-        <label className="font-bold inline pr-2">Sort by: </label>
+      <span>
+        <label className="inline pr-2 font-bold">Sort by: </label>
         <DropDown
           data={props.filter}
-          handler={(by: string) => handelSubmit("sort", by)}
+          handler={(by: string) => handelSubmit({ filterTarget: by })}
         />
-        <label className="font-bold inline pr-2 pl-5">Sort order: </label>
+        <label className="inline pl-5 pr-2 font-bold">Sort order: </label>
         <DropDown
           data={orderData}
-          handler={(by: string) => handelSubmit("order", by)}
+          handler={(by: string) =>
+            handelSubmit({ sortOrder: by as "asc" | "desc" })
+          }
         />
       </span>
     </div>

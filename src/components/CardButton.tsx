@@ -1,12 +1,17 @@
-import buttonDataType from "../types/buttonDataType"
+import buttonDataType from "../types/buttonDataType";
 
-function CardButton(props: buttonDataType){
-
-    return(
-        <>
-        <button key={props.passedKey} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"> {props.text}</button>
-        </>
-    )
+function CardButton(props: buttonDataType) {
+  return (
+    <>
+      <button
+        key={props.passedKey}
+        className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+      >
+        {" "}
+        {props.text}
+      </button>
+    </>
+  );
 }
 
-export default CardButton
+export default CardButton;

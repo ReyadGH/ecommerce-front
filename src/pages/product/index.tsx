@@ -1,64 +1,38 @@
 "use client";
 import ProductCard from "../../components/ProductCard";
-import { useFetchData } from "../../hooks/useFetchData";
-import ProductFilter from "../../components/ProductFilter";
-import { Pagination } from "antd";
 import { signIn } from "next-auth/react";
 import { LoadingData } from "../../components/LoadingData";
+import { useQueryFetch } from "../../hooks/useQueryFetch";
+import AdvanceViewer from "../../components/AdvanceViewer";
 
 function Product() {
-  const [fetchedData, setFetchedData] = useFetchData({
-    serverUrl: "http://localhost:8081/product/page",
-    params: {},
+  const { data, isError, isLoading } = useQueryFetch({
+    url: "http://localhost:8081/product",
+    key: "product-list",
   });
 
-  if (fetchedData.loading) {
+  if (isLoading) {
     return <LoadingData text={"please wait, data loading..."} />;
   }
 
-  if (fetchedData.error) {
+  if (isError) {
     return (
       <div className="text-center">
-        <h3>{fetchedData.error.code}</h3>
-        <h3>{fetchedData.error.message}</h3>
+        <h3>{"fetchedData.error.code"}</h3>
+        <h3>{"fetchedData.error.message"}</h3>
         <button onClick={() => signIn()}>Sign in</button>
       </div>
     );
   }
-  const sortTypeData = {
-    selectedId: 0,
-    options: Object.keys(fetchedData.response.content[0]).map((item) => {
-      return { value: item, text: item };
-    }),
-  };
-
-  const handleChange = (params: object) => {
-    setFetchedData({
-      ...fetchedData.info,
-      params: { ...fetchedData.info.params, ...params },
-    });
-  };
+  console.log(data);
+  if (data.length < 0) {
+    return <p>empty</p>;
+  }
 
   return (
     <>
       <div className="pt-5">
-        {/* sort tab */}
-        <div className="m-auto text-center p-5">
-          <ProductFilter filter={sortTypeData} submit={handleChange} />
-        </div>
-
-        <ProductCard items={fetchedData.response.content} />
-
-        <Pagination
-          className="m-auto text-center p-10"
-          defaultCurrent={fetchedData.response.number + 1}
-          total={fetchedData.response.totalElements - fetchedData.response.size}
-          defaultPageSize={fetchedData.response.size}
-          showQuickJumper
-          onChange={(page: number, size: number) =>
-            handleChange({ page, size })
-          }
-        />
+        <AdvanceViewer children={ProductCard} items={data} />
       </div>
     </>
   );
