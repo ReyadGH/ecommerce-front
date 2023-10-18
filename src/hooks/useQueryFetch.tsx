@@ -1,16 +1,15 @@
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { getSession } from "next-auth/react";
-import { useQuery } from "react-query";
 
 type useQueryFetchType = {
   url: string;
   key: string | readonly unknown[];
-  body?: any;
 };
 
 export function useQueryFetch(query: useQueryFetchType) {
   return useQuery({
-    queryKey: query.key,
+    queryKey: [query.key],
     queryFn: async () =>
       axios
         .get(query.url, {

@@ -20,12 +20,12 @@ function ProductFilter(props: searchFilterType) {
   };
 
   return (
-    <div className="flex w-full flex-col flex-wrap items-center space-x-3 space-y-3 rounded border border-gray-200 p-2 shadow-sm md:flex-row">
+    <div className="flex w-full flex-col flex-wrap items-center space-x-3 space-y-3 p-2 shadow-sm md:flex-row">
       {/* search bar */}
 
       <span className="flex w-full grow items-center space-x-2 divide-x-2 rounded-md border border-gray-200 px-2 outline-none md:w-auto">
         <svg
-          className=" h-5 w-5 text-gray-600 "
+          className=" h-5 w-5 "
           fill="none"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -37,13 +37,13 @@ function ProductFilter(props: searchFilterType) {
         </svg>
         <input
           type="text"
-          className=" grow p-2 text-lg outline-none focus:outline-none "
+          className=" grow bg-transparent p-2 text-lg outline-none focus:outline-none "
           onChange={(e) => handelSubmit({ searchValue: e.target.value })}
         />
       </span>
 
       {/* select */}
-      <span>
+      <span className="">
         <label className="inline pr-2 font-bold">Sort by: </label>
         <DropDown
           data={props.filter}

@@ -4,11 +4,17 @@ export default function Index() {
   const { status } = useSession();
   return (
     <>
-      {status == "authenticated" ? (
-        <button onClick={() => signOut()}>Signout</button>
-      ) : (
-        <button onClick={() => signIn("keycloak")}>Signin</button>
-      )}
+      <div className=" flex min-h-screen flex-col pt-4">
+        {status == "authenticated" ? (
+          <button className="m-auto" onClick={() => signOut()}>
+            Signout
+          </button>
+        ) : (
+          <button className="m-auto" onClick={() => signIn("keycloak")}>
+            Signin
+          </button>
+        )}
+      </div>
     </>
   );
 }

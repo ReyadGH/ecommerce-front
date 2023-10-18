@@ -1,3 +1,5 @@
+import { Session } from "next-auth";
+
 export type NumericalInputType = {
   id: number;
   defualtValue: number;
@@ -13,4 +15,5 @@ export type actionType = {
   type: string;
   min: number;
   max: number;
+  session?: Session | null;
 };

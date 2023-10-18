@@ -10,7 +10,7 @@ export function Footer() {
         <div className="-mx-2 flex">
           <a
             href="#"
-            className="mx-2 text-gray-600 transition-colors duration-300 hover:text-blue-500 dark:text-gray-300 dark:hover:text-blue-400"
+            className="mx-2  transition-colors duration-300 hover:text-blue-500  dark:hover:text-blue-400"
             aria-label="Reddit"
           >
             <svg
@@ -25,7 +25,7 @@ export function Footer() {
 
           <a
             href="#"
-            className="mx-2 text-gray-600 transition-colors duration-300 hover:text-blue-500 dark:text-gray-300 dark:hover:text-blue-400"
+            className="mx-2  transition-colors duration-300 hover:text-blue-500  dark:hover:text-blue-400"
             aria-label="Facebook"
           >
             <svg
@@ -40,7 +40,7 @@ export function Footer() {
 
           <a
             href="#"
-            className="mx-2 text-gray-600 transition-colors duration-300 hover:text-blue-500 dark:text-gray-300 dark:hover:text-blue-400"
+            className="mx-2  transition-colors duration-300 hover:text-blue-500  dark:hover:text-blue-400"
             aria-label="Github"
           >
             <svg

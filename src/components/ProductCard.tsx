@@ -1,15 +1,21 @@
+import { ButtonCallback } from "./ButtonCallback";
+import { SidebarOption } from "../types/SidebarOption";
 import productDataType from "../types/productDataType";
 import ButtonCard from "./CardButton";
-function ProductCard(props: { items: productDataType[] }) {
+function ProductCard(props: {
+  items: productDataType[];
+  options?: SidebarOption;
+}) {
+  console.log(" ===========================" + props.options?.option);
   return (
     <>
-      <div className="flex flex-wrap justify-center gap-4">
+      <div className="flex flex-wrap justify-center gap-4 ">
         {props.items.map((item: productDataType) => {
           return (
             // card
             <div
               key={item.id}
-              className="flex h-[26rem] w-80 flex-col rounded-md p-5 shadow-xl"
+              className="flex h-[26rem] w-80 flex-col rounded-md border-2 border-stone-200 p-5 shadow-lg dark:border-slate-700"
             >
               {/* card-img-top */}
               <img
@@ -27,11 +33,17 @@ function ProductCard(props: { items: productDataType[] }) {
                   {/* btn btn-primary */}
                 </div>
                 <ButtonCard
-                  key={"card-" + item.id}
+                  key={"product-card-" + item.id}
+                  href={"product/" + item.id}
                   passedKey={"button-" + item.id}
-                  herf="#"
                   text={"buy for $" + item.price}
                 />
+                {props.options?.option && (
+                  <ButtonCallback
+                    callback={props.options?.callback}
+                    item={item}
+                  />
+                )}
               </div>
             </div>
           );

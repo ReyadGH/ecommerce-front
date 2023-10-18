@@ -1,29 +1,26 @@
+import { useContext } from "react";
 import { AiOutlineClose } from "react-icons/ai";
+import { SideBarContext } from "../pages/_app";
 
-export function SideBar(props: { status: boolean; toggleStatus: () => void }) {
-  return props.status ? (
+export function SideBar() {
+  const sidebarContext = useContext(SideBarContext);
+  const sidebar = sidebarContext.child.get();
+  return sidebarContext.status.get ? (
     <>
-      <div className="absolute right-0  z-10 h-full w-4/6 bg-white p-4 pt-16 md:w-3/6">
-        <div className=" w-fit items-start ">
-          <span
-            className="absolute left-2 top-2 rounded-md p-2 text-2xl text-red-400 hover:bg-red-200 hover:text-red-600"
-            onClick={props.toggleStatus}
-          >
-            <AiOutlineClose />
-          </span>
-          <main className="space-y-4">
-            <h1 className="text-2xl text-black">Title</h1>
-            <img src="https://dummyimage.com/250/ffffff/000000" alt="" />
-            <p>some content can go here</p>
-            <button className="rounded-md bg-blue-400 p-2 hover:to-blue-600">
-              Complete
-            </button>
-          </main>
+      <div className="fixed right-0  z-10 h-full w-full overflow-auto bg-slate-100 p-4 px-8 pt-16 text-lg dark:bg-gray-700 md:w-5/6 lg:w-3/6">
+        <span
+          className="absolute left-2 top-2 rounded-md p-2 text-2xl text-red-500 hover:bg-red-600 hover:bg-opacity-10 hover:text-red-600"
+          onClick={() => sidebarContext.status.set(false)}
+        >
+          <AiOutlineClose />
+        </span>
+        <div className="overflow-y-auto ">
+          {sidebar ? <sidebarContext.child.get /> : null}
         </div>
       </div>
       <div
-        className="absolute h-full w-full bg-black opacity-50"
-        onClick={props.toggleStatus}
+        className="fixed h-full w-full bg-black opacity-50"
+        onClick={() => sidebarContext.status.set(false)}
       ></div>
     </>
   ) : null;

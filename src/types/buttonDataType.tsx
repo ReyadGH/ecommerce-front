@@ -1,7 +1,8 @@
 type buttonDataType = {
   passedKey?: string;
   text: string;
-  herf: string;
+  className?: string;
+  href: string;
 };
 
 export default buttonDataType;

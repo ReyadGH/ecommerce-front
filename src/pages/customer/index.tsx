@@ -6,29 +6,33 @@ import AdvanceViewer from "../../components/AdvanceViewer";
 import SimpleTable from "../../components/SimpleTable";
 function Customer() {
   const url = "http://localhost:8081/customer";
-  const { data, isLoading, error } = useQueryFetch({
+  const { data, isLoading, isError, error } = useQueryFetch({
     url: url,
     key: "customer-list",
   });
-  console.log(isLoading);
   if (isLoading) {
-    return <LoadingData text={"please wait, data loading..."} />;
+    return (
+      <>
+        <LoadingData text={"please wait, data loading..."} />
+      </>
+    );
   }
-  console.log(isLoading);
-  if (error) {
+  if (isError) {
     return (
       <div className="text-center">
-        <h3>{"error.code"}</h3>
-        <h3>{"error.message"}</h3>
-        <button onClick={() => signIn()}>Sign in</button>
+        <h3>{error.name}</h3>
+        <h3>{error.message}</h3>
+        <button onClick={() => signIn("keycloak")}>Sign in</button>
       </div>
     );
   }
 
   return (
     <>
-      <h1 className="text-center text-xl">Customers Table</h1>
-      <AdvanceViewer items={data} children={SimpleTable} />
+      <div className="flex min-h-screen flex-col pt-4">
+        <h1 className="px-10 text-3xl">Customers Table</h1>
+        <AdvanceViewer items={data} children={SimpleTable} />
+      </div>
     </>
   );
 }

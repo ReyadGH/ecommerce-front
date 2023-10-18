@@ -10,24 +10,24 @@ export type useFilterSearchType = {
   page: number;
   size: number;
   totalPages: number;
+  isLoading?: boolean;
 };
 
 export function useFilterSearch(
   initialState: useFilterSearchType,
 ): [useFilterSearchType, (search: useFilterSearchType) => void] {
   const [filteredSearchedItems, setFilterSearch] = useState(initialState);
-
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
-    console.log("initial");
+    setIsLoading(true);
     pipeline(initialState);
+    setIsLoading(false);
   }, []);
 
   const pipeline = (newSearch: useFilterSearchType) => {
     const searchItems = (items: useFilterSearchType) => {
       return items.list.filter((item) => {
-        return items.searchValue !== ""
-          ? String(item[items.filterTarget]).includes(items.searchValue)
-          : item;
+        return String(item[items.filterTarget]).includes(items.searchValue);
       });
     };
 
@@ -37,7 +37,7 @@ export function useFilterSearch(
     };
 
     const pagingItems = (items: useFilterSearchType) => {
-      items.page = items.page;
+      items.page = filteredSearchedItems.page !== items.page ? items.page : 1;
       items.totalPages = items.result.length;
       items.result = items.result.slice(
         (items.page - 1) * items.size,
@@ -48,8 +48,7 @@ export function useFilterSearch(
     newSearch.result = searchItems(newSearch);
     newSearch.result = sortItems(newSearch);
     newSearch = pagingItems(newSearch);
-    console.log(newSearch);
-    setFilterSearch(newSearch);
+    setFilterSearch({ ...newSearch, isLoading: isLoading });
   };
 
   return [filteredSearchedItems, pipeline];

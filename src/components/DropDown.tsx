@@ -13,7 +13,7 @@ function DropDown(props: {
     <>
       <select
         onChange={(e) => handleChange(e)}
-        className="cursor-pointer rounded-md border-2 border-slate-300 bg-slate-200 px-3 py-1 hover:border-slate-400"
+        className="cursor-pointer rounded-md border-2 border-slate-300 bg-transparent py-1 hover:border-slate-400"
       >
         {props.data.options.map((item) => {
           return (

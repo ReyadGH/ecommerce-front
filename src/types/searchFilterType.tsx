@@ -4,11 +4,6 @@ export type searchFilterType = {
   filter: DropDownType;
   submit: (filtters: filterSearchType) => void;
 };
-export type filters = {
-  key?: [string | number];
-  sortBy: string;
-  order: string;
-};
 
 export type filterSearchType = {
   filterTarget?: string;
