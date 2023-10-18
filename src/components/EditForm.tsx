@@ -3,13 +3,14 @@ import axios from "axios";
 import { Session } from "next-auth";
 import { getSession } from "next-auth/react";
 import { ButtonCallback } from "./ButtonCallback";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { SideBarContext } from "../pages/_app";
+import productItemType from "../types/productDataType";
+import Item from "antd/es/list/Item";
 
 const mutateFn = (item: any, session: Session | null, url?: string) => {
   return axios
-    .put("http://localhost:8081" + url, {
-      body: item,
+    .put("http://localhost:8081" + url, item, {
       headers: {
         Authorization: `Bearer ${
           session != null && session.accessToken ? session.accessToken : ""
@@ -24,7 +25,7 @@ const mutateFn = (item: any, session: Session | null, url?: string) => {
 };
 
 function EditForm(props: {
-  item: { [key: number | string]: object };
+  item: { data: productItemType; [key: number | string]: object };
   disable?: string[];
   number?: string[];
   removed?: string[];
@@ -33,19 +34,18 @@ function EditForm(props: {
   url: string;
 }) {
   const inputOptions = !props.item ? [] : Object.keys(props.item) || [];
-
-  if (inputOptions.length === 0 || !(inputOptions instanceof Array))
-    return <p>No data</p>;
   const context = useContext(SideBarContext);
-
   const client = useQueryClient();
-  const { mutate, error, isError } = useMutation({
+  const [dataState, setDataState] = useState(props.item);
+
+  const { mutate } = useMutation({
     mutationFn: () =>
       getSession().then((session) =>
         mutateFn(
-          inputOptions.map((option) =>
-            props.removed?.includes(option) ? null : props.item[option],
-          ),
+          dataState,
+          // (!dataState ? [] : Object.keys(dataState) || []).map((option) =>
+          //   props.removed?.includes(option) ? null : dataState[option],
+          // ),
           session,
           props.url,
         ),
@@ -54,6 +54,10 @@ function EditForm(props: {
       client.setQueryData(props.queryKey, props.refetch || newCarts);
     },
   });
+
+  if (inputOptions.length === 0 || !(inputOptions instanceof Array))
+    return <p>No data</p>;
+
   console.log(props.item);
   return (
     <>
@@ -65,6 +69,14 @@ function EditForm(props: {
               <span className="flex justify-between">
                 <p>{option + " :"}</p>
                 <input
+                  onChange={(e) => {
+                    setDataState((prev) => {
+                      prev[option] = e.target.value;
+                      return prev;
+                    });
+                    console.log(option, ":", props.item[option]);
+                    console.log(option, ":", e.target.value);
+                  }}
                   type={
                     !props.number?.includes(option)
                       ? "textarea"
@@ -84,6 +96,7 @@ function EditForm(props: {
           callback={() => {
             context.status.set(false);
             context.child.set(<></>);
+            console.log(props.item);
             mutate();
           }}
         />

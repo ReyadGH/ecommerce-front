@@ -15,8 +15,7 @@ import axios from "axios";
 
 const mutateFn = (item: any, session: Session | null) => {
   return axios
-    .post("http://localhost:8081/cart", {
-      body: item,
+    .post("http://localhost:8081/cart", item, {
       headers: {
         Authorization: `Bearer ${
           session != null && session.accessToken ? session.accessToken : ""
@@ -79,9 +78,9 @@ function ProductItemPage() {
       <EditForm
         queryKey={[`productId-${router.query.id}`]}
         item={item}
-        disable={["id", "owner"]}
+        disable={["id", "customer"]}
         number={["price"]}
-        url={"/product/" + item.id}
+        url={"/product"}
       />,
     );
   };
@@ -91,43 +90,42 @@ function ProductItemPage() {
 
   return (
     <>
-      <section>
-        <div className="container mx-auto px-5 py-24">
-          <div className="mx-auto flex flex-wrap lg:w-4/5">
-            <img
-              alt="ecommerce"
-              className="max-h-[32rem] w-full rounded border border-gray-200 object-cover object-center lg:w-[50%] "
-              src={product.image}
-            />
-            <div className="mt-6 w-full lg:mt-0 lg:w-1/2 lg:py-6 lg:pl-10">
-              <h1 className="title-font mb-1 text-3xl font-medium ">
-                {product.name}
-              </h1>
-              <h2 className="title-font text-sm tracking-widest">
-                item #{product.id}
-              </h2>
-              <p className="pt-8 leading-relaxed">{product.description}</p>
-              <div className="flex pt-8">
-                <span className="title-font text-2xl font-medium ">
-                  ${product.price.toFixed(2)}
-                </span>
+      <div className="container mx-auto min-h-screen px-5 py-24">
+        <div className="mx-auto flex flex-wrap lg:w-4/5">
+          <img
+            alt="ecommerce"
+            className="max-h-[32rem] w-full rounded border border-gray-200 object-cover object-center lg:w-[50%] "
+            src={product.image}
+          />
+          <div className="mt-6 w-full lg:mt-0 lg:w-1/2 lg:py-6 lg:pl-10">
+            <h1 className="title-font mb-1 text-3xl font-medium ">
+              {product.name}
+            </h1>
+            <h2 className="title-font text-sm tracking-widest">
+              item #{product.id}
+            </h2>
+            <p className="pt-8 leading-relaxed">{product.description}</p>
+            <div className="flex gap-3 pt-8">
+              <span className="title-font text-2xl font-medium ">
+                ${Number(product?.price).toFixed(2)}
+              </span>
+              <ButtonCallback
+                text="Add to cart"
+                callback={callbackAdd}
+                item={product}
+              />
+              {
                 <ButtonCallback
-                  text="Add to cart"
-                  callback={callbackAdd}
+                  text="Edit"
+                  callback={callbackEdit}
                   item={product}
                 />
-                {
-                  <ButtonCallback
-                    text="Edit"
-                    callback={callbackEdit}
-                    item={product}
-                  />
-                }
-              </div>
+              }
             </div>
           </div>
         </div>
-      </section>
+      </div>
+
       <ReviewsComponent reviewId={product.id} targetURL="product" />
     </>
   );

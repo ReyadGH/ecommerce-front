@@ -21,7 +21,6 @@ const mutateFn = (cart: CartItemsType[], session: Session | null) => {
       },
     })
     .then((res) => {
-      console.log(res.data);
       return res.data;
     })
     .catch((err) => err);
@@ -35,10 +34,10 @@ export function MyCart(props: {
   const { data: cart, reducer: reducer } = useCartReducer(props.carts);
 
   const client = useQueryClient();
-  const { mutate, error, isError } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: () => getSession().then((session) => mutateFn(cart, session)),
-    onSuccess: (newCarts) => {
-      client.setQueryData(["cart-page"], newCarts);
+    onSuccess: () => {
+      // client.setQueryData(["cart-page"], newCarts);
       client.refetchQueries();
     },
   });
