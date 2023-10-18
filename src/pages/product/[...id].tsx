@@ -4,16 +4,59 @@ import CardButton from "../../components/CardButton";
 import { useQueryFetch } from "../../hooks/useQueryFetch";
 import productItemType from "../../types/productDataType";
 import { LoadingData } from "../../components/LoadingData";
-import { signIn } from "next-auth/react";
+import { getSession, signIn } from "next-auth/react";
+import { useContext } from "react";
+import { SideBarContext } from "../_app";
+import EditForm from "../../components/EditForm";
+import { ButtonCallback } from "../../components/ButtonCallback";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Session } from "next-auth";
+import axios from "axios";
+
+const mutateFn = (item: any, session: Session | null) => {
+  return axios
+    .post("http://localhost:8081/cart", {
+      body: item,
+      headers: {
+        Authorization: `Bearer ${
+          session != null && session.accessToken ? session.accessToken : ""
+        }`,
+      },
+    })
+    .then((res) => {
+      console.log(res.data);
+      return res.data;
+    })
+    .catch((err) => err);
+};
 
 function ProductItemPage() {
   const router = useRouter();
-  const { data, isError, error, isLoading } = useQueryFetch({
+
+  const { data, isError, isFetching, error, isLoading } = useQueryFetch({
     url: `http://localhost:8081/product/${router.query.id}`,
     key: `productId-${router.query.id}`,
   });
 
-  if (isLoading) {
+  const client = useQueryClient();
+  const { mutate } = useMutation({
+    mutationFn: (item: any) =>
+      getSession().then((session) => mutateFn(item, session)),
+    onSuccess: (newProduct) => {
+      client.setQueryData([`productId-${router.query.id}`], newProduct);
+    },
+    onError: (error) => console.error(error),
+  });
+  const session = getSession();
+
+  const sidebarContext = useContext(SideBarContext);
+
+  const showSidebar = (child: any) => {
+    sidebarContext.status.set(true);
+    sidebarContext.child.set(child);
+  };
+
+  if (isLoading || isFetching) {
     return (
       <>
         <LoadingData text={"please wait, data loading..."} />
@@ -30,6 +73,21 @@ function ProductItemPage() {
     );
   }
   const product = data as productItemType;
+
+  const callbackEdit = (item: any) => {
+    showSidebar(
+      <EditForm
+        queryKey={[`productId-${router.query.id}`]}
+        item={item}
+        disable={["id", "owner"]}
+        number={["price"]}
+        url={"/product/" + item.id}
+      />,
+    );
+  };
+  const callbackAdd = (item: any) => {
+    mutate({ id: item.id, quantity: 1 });
+  };
 
   return (
     <>
@@ -53,7 +111,18 @@ function ProductItemPage() {
                 <span className="title-font text-2xl font-medium ">
                   ${product.price.toFixed(2)}
                 </span>
-                <CardButton href="/a" text="Buy" className="ml-auto" />
+                <ButtonCallback
+                  text="Add to cart"
+                  callback={callbackAdd}
+                  item={product}
+                />
+                {
+                  <ButtonCallback
+                    text="Edit"
+                    callback={callbackEdit}
+                    item={product}
+                  />
+                }
               </div>
             </div>
           </div>

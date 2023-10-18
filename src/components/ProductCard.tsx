@@ -6,7 +6,6 @@ function ProductCard(props: {
   items: productDataType[];
   options?: SidebarOption;
 }) {
-  console.log(" ===========================" + props.options?.option);
   return (
     <>
       <div className="flex flex-wrap justify-center gap-4 ">
@@ -32,18 +31,22 @@ function ProductCard(props: {
                   <p className="line-clamp-3">{item.description}</p>
                   {/* btn btn-primary */}
                 </div>
-                <ButtonCard
-                  key={"product-card-" + item.id}
-                  href={"product/" + item.id}
-                  passedKey={"button-" + item.id}
-                  text={"buy for $" + item.price}
-                />
-                {props.options?.option && (
-                  <ButtonCallback
-                    callback={props.options?.callback}
-                    item={item}
+                <div className="flex w-full space-x-2">
+                  <ButtonCard
+                    key={"product-card-" + item.id}
+                    href={"product/" + item.id}
+                    passedKey={"button-" + item.id}
+                    text={"buy for $" + item.price}
+                    className="grow"
                   />
-                )}
+                  {props.options?.option && (
+                    <ButtonCallback
+                      callback={props.options?.callback}
+                      text="Edit"
+                      item={item}
+                    />
+                  )}
+                </div>
               </div>
             </div>
           );

@@ -76,7 +76,6 @@ export function MyCart(props: {
                 item={props.carts}
                 text="Checkout"
               />
-              // <CardButton href="/checkout" text="Check Out" className="m-2" />
             )}
           </div>
         </div>
