@@ -125,8 +125,6 @@ function ProductItemPage() {
           </div>
         </div>
       </div>
-
-      <ReviewsComponent reviewId={product.id} targetURL="product" />
     </>
   );
 }
