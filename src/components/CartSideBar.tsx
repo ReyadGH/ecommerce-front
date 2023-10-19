@@ -27,12 +27,12 @@ function CartPage() {
       </div>
     );
   }
-  let carts = data as CartItemsType[];
+
   return (
     <>
       {
         <MyCart
-          carts={carts.filter((cart) => cart.status == CartItemsStatus.DRAFT)}
+          carts={data.filter((cart) => cart.status == CartItemsStatus.DRAFT)}
           title="My Cart"
           showOptions={true}
         />

@@ -1,4 +1,5 @@
 import { Session } from "next-auth";
+import { CartItemsStatus } from "./CartItemsType";
 
 export type NumericalInputType = {
   id: number;
@@ -16,6 +17,7 @@ export type actionType = {
   type: actionTypeEnum;
   min: number;
   max: number;
+  status?: CartItemsStatus;
   session?: Session | null;
 };
 

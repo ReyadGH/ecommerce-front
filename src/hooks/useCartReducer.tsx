@@ -32,10 +32,12 @@ function useCartReducer(initial: CartItemsType[]) {
         break;
       case actionTypeEnum.CANCELE:
         updatedCart.status = CartItemsStatus.CANCELED;
+        action.status = CartItemsStatus.CANCELED;
         break;
       default:
         throw Error("Wrong action type: " + action.type);
     }
+    console.log(updatedCart);
     const outData: CartItemsType[] = [...cart];
     outData[currentIndex] = updatedCart;
     setCarts(outData);

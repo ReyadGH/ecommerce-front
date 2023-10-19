@@ -10,6 +10,7 @@ import { actionType } from "../types/NumeriaclInputType";
 // import CardButton from "./CardButton";
 
 const mutateFn = (cart: CartItemsType, session: Session | null) => {
+  console.log(cart);
   return axios
     .put(
       "http://localhost:8081/cart",
@@ -40,8 +41,11 @@ const CartItemCard = (props: { item: CartItemsType; showOptions: boolean }) => {
   const { mutate, error, isError } = useMutation({
     mutationFn: () =>
       getSession().then((session) => mutateFn(props.item, session)),
-    onSuccess: (newCarts) => {
-      client.setQueryData(["cart-page", props.item.id], newCarts);
+    onSuccess: async () => {
+      //client.setQueryData(["cart-page", props.item.id], newCarts);
+      await client
+        .fetchQuery({ queryKey: ["cart-page"] })
+        .then((d) => client.setQueriesData({ queryKey: ["cart-page"] }, d));
     },
   });
 

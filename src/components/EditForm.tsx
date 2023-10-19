@@ -6,7 +6,6 @@ import { ButtonCallback } from "./ButtonCallback";
 import { useContext, useState } from "react";
 import { SideBarContext } from "../pages/_app";
 import productItemType from "../types/productDataType";
-import Item from "antd/es/list/Item";
 
 const mutateFn = (item: any, session: Session | null, url?: string) => {
   return axios
