@@ -3,11 +3,12 @@ import AdvanceViewer from "../../components/AdvanceViewer";
 import ProductCard from "../../components/ProductCard";
 import { LoadingData } from "../../components/LoadingData";
 import { useQueryFetch } from "../../hooks/useQueryFetch";
+import { ButtonCallback } from "../../components/ButtonCallback";
 
 function MyPage() {
   const { data, isError, isLoading, error } = useQueryFetch({
     url: "http://localhost:8081/product/my",
-    key: "my-product-list",
+    key: ["my-product-list"],
   });
 
   if (isLoading) {
@@ -30,7 +31,8 @@ function MyPage() {
   return (
     <>
       <div className="flex min-h-screen flex-col pt-4">
-        <h1 className="px-10 text-3xl">Customers Table</h1>
+        <h1 className="px-10 text-3xl">My Store </h1>
+
         <AdvanceViewer children={ProductCard} items={data} />
       </div>
     </>

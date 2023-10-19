@@ -8,7 +8,7 @@ function CheckOut() {
           <div className="m-auto w-fit animate-bounce items-center pb-20 pt-4 text-9xl text-lime-400">
             <MdLocalShipping />
           </div>
-          <h1 className=" text-xl font-bold">Item is shipping 😉</h1>
+          <h1 className=" text-xl font-bold">Shipping 😉</h1>
         </div>
       </div>
     </>

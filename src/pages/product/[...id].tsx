@@ -1,32 +1,31 @@
-import { ReviewsComponent } from "../../components/ReviewsComponent";
 import { useRouter } from "next/router";
-import CardButton from "../../components/CardButton";
 import { useQueryFetch } from "../../hooks/useQueryFetch";
 import productItemType from "../../types/productDataType";
 import { LoadingData } from "../../components/LoadingData";
-import { getSession, signIn } from "next-auth/react";
+import { getSession, signIn, useSession } from "next-auth/react";
 import { useContext } from "react";
 import { SideBarContext } from "../_app";
 import EditForm from "../../components/EditForm";
 import { ButtonCallback } from "../../components/ButtonCallback";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Session } from "next-auth";
 import axios from "axios";
 
-const mutateFn = (item: any, session: Session | null) => {
-  return axios
-    .post("http://localhost:8081/cart", item, {
-      headers: {
-        Authorization: `Bearer ${
-          session != null && session.accessToken ? session.accessToken : ""
-        }`,
-      },
-    })
-    .then((res) => {
-      console.log(res.data);
-      return res.data;
-    })
-    .catch((err) => err);
+const mutateFn = (item: any) => {
+  return getSession().then((session) =>
+    axios
+      .post("http://localhost:8081/cart", item, {
+        headers: {
+          Authorization: `Bearer ${
+            session != null && session.accessToken ? session.accessToken : ""
+          }`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        return res.data;
+      })
+      .catch((err) => err),
+  );
 };
 
 function ProductItemPage() {
@@ -34,19 +33,18 @@ function ProductItemPage() {
 
   const { data, isError, isFetching, error, isLoading } = useQueryFetch({
     url: `http://localhost:8081/product/${router.query.id}`,
-    key: `productId-${router.query.id}`,
+    key: [`productId-${router.query.id}`],
   });
 
   const client = useQueryClient();
   const { mutate } = useMutation({
-    mutationFn: (item: any) =>
-      getSession().then((session) => mutateFn(item, session)),
+    mutationFn: (item: any) => mutateFn(item),
     onSuccess: (newProduct) => {
-      client.setQueryData([`productId-${router.query.id}`], newProduct);
+      //client.setQueryData([`productId-${router.query.id}`], newProduct);
     },
     onError: (error) => console.error(error),
   });
-  const session = getSession();
+  const { data: session } = useSession();
 
   const sidebarContext = useContext(SideBarContext);
 
@@ -109,18 +107,22 @@ function ProductItemPage() {
               <span className="title-font text-2xl font-medium ">
                 ${Number(product?.price).toFixed(2)}
               </span>
-              <ButtonCallback
-                text="Add to cart"
-                callback={callbackAdd}
-                item={product}
-              />
-              {
+              {session?.user.email == product.name ? (
+                <>
+                  <ButtonCallback
+                    text="Edit"
+                    callback={callbackEdit}
+                    item={product}
+                  />
+                  {/* <NumericalInput /> */}
+                </>
+              ) : (
                 <ButtonCallback
-                  text="Edit"
-                  callback={callbackEdit}
+                  text="Add to cart"
+                  callback={callbackAdd}
                   item={product}
                 />
-              }
+              )}
             </div>
           </div>
         </div>

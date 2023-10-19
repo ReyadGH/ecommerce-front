@@ -6,5 +6,11 @@ export type CartItemsType = {
   price: number;
   quantity: number;
   date: Date;
-  status: string;
+  status: CartItemsStatus;
 };
+
+export enum CartItemsStatus {
+  DRAFT = "DRAFT",
+  CHECKED_OUT = "CHECKED_OUT",
+  CANCELED = "CANCELED",
+}

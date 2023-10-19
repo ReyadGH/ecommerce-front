@@ -6,14 +6,23 @@ export type NumericalInputType = {
   step?: number;
   min?: number;
   max?: number;
+  deleteBtn?: boolean;
   changeHandler: (action: actionType) => void;
 };
 
 export type actionType = {
   id: number;
   value: number;
-  type: string;
+  type: actionTypeEnum;
   min: number;
   max: number;
   session?: Session | null;
 };
+
+export enum actionTypeEnum {
+  INCREASE,
+  DECREASE,
+  CANCELE,
+  UPDATE,
+  NONE,
+}

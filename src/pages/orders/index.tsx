@@ -1,11 +1,10 @@
 import { signIn } from "next-auth/react";
-import { useQueryFetch } from "../hooks/useQueryFetch";
-import { CartItemsStatus, CartItemsType } from "../types/CartItemsType";
-import { LoadingData } from "./LoadingData";
-import { MyCart } from "./MyCart";
-import _ from "underscore";
+import { LoadingData } from "../../components/LoadingData";
+import { useQueryFetch } from "../../hooks/useQueryFetch";
+import AdvanceViewer from "../../components/AdvanceViewer";
+import SimpleTable from "../../components/SimpleTable";
 
-function CartPage() {
+export default function OrdersPage() {
   const { data, isLoading, isError, error } = useQueryFetch({
     url: "http://localhost:8081/cart",
     key: ["cart-page"],
@@ -27,18 +26,13 @@ function CartPage() {
       </div>
     );
   }
-  let carts = data as CartItemsType[];
+
   return (
     <>
-      {
-        <MyCart
-          carts={carts.filter((cart) => cart.status == CartItemsStatus.DRAFT)}
-          title="My Cart"
-          showOptions={true}
-        />
-      }
+      <div className="flex min-h-screen flex-col pt-4">
+        <h1 className="px-10 text-3xl">My Orders</h1>
+        <AdvanceViewer children={SimpleTable} items={data} />
+      </div>
     </>
   );
 }
-
-export default CartPage;

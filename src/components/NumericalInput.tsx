@@ -1,11 +1,15 @@
-import { NumericalInputType, actionType } from "../types/NumeriaclInputType";
+import {
+  NumericalInputType,
+  actionType,
+  actionTypeEnum,
+} from "../types/NumeriaclInputType";
 import { MdDelete } from "react-icons/md";
 
 function NumericalInput(data: NumericalInputType) {
   const dummyAction: actionType = {
     id: data.id,
     value: data.step || 1,
-    type: "",
+    type: actionTypeEnum.NONE,
     min: data.min || -999,
     max: data.max || 999,
   };
@@ -20,10 +24,11 @@ function NumericalInput(data: NumericalInputType) {
     <>
       <div className="flex flex-row ">
         <button
-          className=" w-8 rounded-l-md bg-blue-500 hover:bg-blue-600 md:p-2 lg:w-10  lg:text-xl"
-          data-action="increment"
+          className=" w-8 rounded-l-md bg-blue-500 text-white hover:bg-blue-600 md:p-2 lg:w-10  lg:text-xl"
           key={"input-increment-" + data.id}
-          onClick={() => handler({ ...dummyAction, type: "increment" })}
+          onClick={() =>
+            handler({ ...dummyAction, type: actionTypeEnum.INCREASE })
+          }
         >
           +
         </button>
@@ -36,26 +41,39 @@ function NumericalInput(data: NumericalInputType) {
           onChange={(e) =>
             handler({
               ...dummyAction,
-              type: "change",
+              type: actionTypeEnum.UPDATE,
               value: Number(e.target.value),
             })
           }
         />
         {dummyAction.min != data.defualtValue ? (
-          <button
-            className=" w-8 rounded-r-md bg-blue-500 hover:bg-blue-600  md:p-2 lg:w-10   lg:text-xl"
-            data-action="decrement"
-            key={"input-decrement-" + data.id}
-            onClick={() => handler({ ...dummyAction, type: "decrement" })}
-          >
-            -
-          </button>
+          <>
+            <button
+              className=" w-8 rounded-r-md bg-blue-500 text-white hover:bg-blue-600  md:p-2 lg:w-10 lg:text-xl"
+              key={"input-decrement-" + data.id}
+              onClick={() =>
+                handler({ ...dummyAction, type: actionTypeEnum.DECREASE })
+              }
+            >
+              -
+            </button>
+            <button
+              className="ml-4 flex w-8 flex-row items-center justify-center rounded-md bg-red-500 text-white hover:bg-red-600 md:p-2 lg:w-10  lg:text-xl"
+              key={"input-btn-cancele-" + data.id}
+              onClick={() =>
+                handler({ ...dummyAction, type: actionTypeEnum.CANCELE })
+              }
+            >
+              <MdDelete />
+            </button>
+          </>
         ) : (
           <button
-            className="flex w-8 flex-row items-center justify-center rounded-r-md bg-red-500 hover:bg-red-600 md:p-2 lg:w-10  lg:text-xl"
-            data-action="decrement"
-            key={"input-decrement-" + data.id}
-            onClick={() => handler({ ...dummyAction, type: "decrement" })}
+            className="flex w-8 flex-row items-center justify-center rounded-r-md bg-red-500 text-white hover:bg-red-600 md:p-2 lg:w-10  lg:text-xl"
+            key={"input-cancele-" + data.id}
+            onClick={() =>
+              handler({ ...dummyAction, type: actionTypeEnum.CANCELE })
+            }
           >
             <MdDelete />
           </button>

@@ -8,7 +8,7 @@ function Customer() {
   const url = "http://localhost:8081/customer";
   const { data, isLoading, isError, error } = useQueryFetch({
     url: url,
-    key: "customer-list",
+    key: ["customer-list"],
   });
   if (isLoading) {
     return (

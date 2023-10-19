@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { CartItemsType } from "../types/CartItemsType";
-import { actionType } from "../types/NumeriaclInputType";
+import { CartItemsStatus, CartItemsType } from "../types/CartItemsType";
+import { actionType, actionTypeEnum } from "../types/NumeriaclInputType";
 
 function useCartReducer(initial: CartItemsType[]) {
   const [cart, setCarts] = useState(initial);
@@ -12,23 +12,26 @@ function useCartReducer(initial: CartItemsType[]) {
 
     if (currentIndex < 0) throw Error("Internal error");
     switch (action.type) {
-      case "increment":
+      case actionTypeEnum.INCREASE:
         if (updatedCart.quantity + action.value <= action.max)
           updatedCart.quantity += action.value;
 
         break;
-      case "decrement":
+      case actionTypeEnum.DECREASE:
         if (updatedCart.quantity - action.value >= action.min)
           updatedCart.quantity -= action.value;
         break;
 
-      case "change":
+      case actionTypeEnum.UPDATE:
         if (
           updatedCart.quantity + action.value < action.max &&
           updatedCart.quantity - action.value > action.min &&
           action.value != 0
         )
           updatedCart.quantity = action.value;
+        break;
+      case actionTypeEnum.CANCELE:
+        updatedCart.status = CartItemsStatus.CANCELED;
         break;
       default:
         throw Error("Wrong action type: " + action.type);

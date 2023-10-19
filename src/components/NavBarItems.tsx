@@ -6,7 +6,6 @@ export function NavBarItems(props: {
   status: "authenticated" | "loading" | "unauthenticated";
   menu?: boolean;
 }) {
-  console.log(props.menu || false);
   return (
     <ul
       className={

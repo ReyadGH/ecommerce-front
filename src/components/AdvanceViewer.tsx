@@ -9,6 +9,7 @@ function AdvanceViewer(props: {
   items: { [key: number | string]: string }[];
   options?: SidebarOption;
   children: any;
+  extras?: { element: JSX.Element; callback: (arg0?: any) => void }[];
 }) {
   const filterOptions = props.items ? [] : Object.keys(props.items[0]) || [];
   const [pageble, setPageble] = useFilterSearch({

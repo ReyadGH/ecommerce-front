@@ -37,6 +37,11 @@ const data = {
       text: "My Store",
       href: "/mystore",
     },
+    {
+      passedKey: "nav-button-4",
+      text: "My Orders",
+      href: "/orders",
+    },
   ],
 };
 
